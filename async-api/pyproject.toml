@@ -1,0 +1,20 @@
+[project]
+name = "async-api"
+version = "0.1.0"
+description = "Este repositorio contiene una API RESTful construida con las tecnologías modernas de Python: FastAPI para el framework web y SQLModel para la interacción con la base de datos y la validación de datos. El enfoque principal del proyecto es demostrar una implementación completamente asíncrona, desde las peticiones HTTP hasta las consultas a la base de datos. Se sigue una arquitectura en capas para una clara separación de responsabilidades y se incluye una suite de pruebas robusta con `pytest` para garantizar la calidad y el correcto funcionamiento del código."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiosqlite>=0.21.0",
+    "fastapi[all]>=0.115.14",
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.10.1",
+    "pydantic[email]>=2.11.7",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.0.0",
+    "python-multipart>=0.0.20",
+    "ruff>=0.12.2",
+    "sqlalchemy[asyncio]>=2.0.41",
+    "sqlmodel>=0.0.24",
+    "uvicorn[standard]>=0.35.0",
+]
