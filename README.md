@@ -60,3 +60,32 @@ El proyecto se divide en dos módulos principales:
 - Filtrado de gastos por usuario (asociación implícita al token)
 
 ---
+
+## auth-flow
+
+Proyecto introductorio para aprender **Express.js**, enfocado en comprender el flujo de autenticación mediante **JWT** y manejo de cookies.  
+Está construido con **JavaScript**, usando una base de datos local (archivos planos) y sin una arquitectura estricta, priorizando el aprendizaje de la tecnología.
+
+**Tecnologías y librerías utilizadas:**
+- Express.js
+- JWT (`jsonwebtoken`)
+- cookie-parser
+- db-local (persistencia simple en archivos)
+- JavaScript (sin TypeScript)
+
+**Middleware utilizados:**
+- Parseo de request a JSON
+- Manejo de cookies
+- Verificación de sesión a partir de la cookie
+
+**Principales funcionalidades de la API:**
+- `POST /login`: iniciar sesión y generar token
+- `POST /register`: registrar un nuevo usuario
+- `POST /logout`: cerrar sesión
+- `GET /`: endpoint público
+- `GET /protected`: endpoint protegido (requiere sesión activa)
+
+📌 *Nota:* La arquitectura está simplificada y poco modularizada, ya que el objetivo fue experimentar con los conceptos básicos de Express y autenticación.
+
+---
+
