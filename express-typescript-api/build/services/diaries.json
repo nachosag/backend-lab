@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "date": "2025-01-01",
+        "weather": "rainy",
+        "visibility": "poor",
+        "comment": "Pretty scary flight, I'm glad I'm alive"
+    },
+    {
+        "id": 2,
+        "date": "2025-01-02",
+        "weather": "sunny",
+        "visibility": "good",
+        "comment": "I love the sun"
+    },
+    {
+        "id": 3,
+        "date": "2025-01-03",
+        "weather": "cloudy",
+        "visibility": "good",
+        "comment": "Clouds are nice too"
+    },
+    {
+        "id": 4,
+        "date": "2025-01-04",
+        "weather": "windy",
+        "visibility": "poor",
+        "comment": "Windy days are not my favorite"
+    },
+    {
+        "id": 5,
+        "date": "2025-01-05",
+        "weather": "snowy",
+        "visibility": "good",
+        "comment": "Snow is beautiful"
+    },
+    {
+        "id": 6,
+        "date": "2025-01-06",
+        "weather": "foggy",
+        "visibility": "poor",
+        "comment": "Fog makes everything mysterious"
+    },
+    {
+        "id": 7,
+        "date": "2025-01-07",
+        "weather": "stormy",
+        "visibility": "poor",
+        "comment": "Storms can be thrilling"
+    },
+    {
+        "id": 8,
+        "date": "2025-01-08",
+        "weather": "hail",
+        "visibility": "poor",
+        "comment": "Hail is painful but fascinating"
+    },
+    {
+        "id": 9,
+        "date": "2025-01-09",
+        "weather": "clear",
+        "visibility": "good",
+        "comment": "Clear skies are the best"
+    },
+    {
+        "id": 10,
+        "date": "2025-01-10",
+        "weather": "overcast",
+        "visibility": "good",
+        "comment": "Overcast days are cozy"
+    }
+]
