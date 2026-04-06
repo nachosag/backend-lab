@@ -1,0 +1,4 @@
+.atl
+dist
+node_modules
+.env
