@@ -73,7 +73,7 @@ export function formatMessage (template: string, data: Record<string, string | n
     const stringValue = String(value)
 
     if (key === 'action') {
-      result = result.replace(`{${key}}`, stringValue.charAt(0) + stringValue.slice(1))
+      result = result.replace(`{${key}}`, stringValue.charAt(0).toUpperCase() + stringValue.slice(1))
     } else {
       result = result.replace(`{${key}}`, stringValue)
     }
