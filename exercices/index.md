@@ -7,7 +7,7 @@
 - [ ] Expense Tracker API
 - [ ] Expense Tracker
 - [ ] GitHub Trending CLI
-- [ ] GitHub User Activity
+- [x] GitHub User Activity
 - [ ] Image Processing Service
 - [ ] Linux Server Setup
 - [ ] Markdown Note Taking App
@@ -17,7 +17,7 @@
 - [ ] Personal Blog
 - [ ] Real-Time Leaderboard
 - [ ] Scalable E-Commerce Platform
-- [ ] Task Tracker CLI
+- [x] Task Tracker CLI
 - [ ] TMDB CLI Tool
 - [ ] Todo List API
 - [ ] Unit Converter
