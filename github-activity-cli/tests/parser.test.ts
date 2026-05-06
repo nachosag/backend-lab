@@ -1,16 +1,19 @@
 import { describe, expect, it } from 'vitest'
+
 import { aggregateEvents, formatMessage } from '../src/parser.js'
 
 describe('aggregateEvents', () => {
   it('should group a single event by repo and type', () => {
-    const input = [{
-      type: 'newEvent',
-      repo: { name: 'newRepo' },
-      payload: {}
-    }]
+    const input = [
+      {
+        type: 'newEvent',
+        repo: { name: 'newRepo' },
+        payload: {},
+      },
+    ]
     const result = aggregateEvents(input)
     expect(result).toEqual({
-      'newRepo': { 'newEvent': { count: 1 } }
+      newRepo: { newEvent: { count: 1 } },
     })
   })
 
@@ -21,65 +24,71 @@ describe('aggregateEvents', () => {
   it('should group multiple events by repo and type', () => {
     const input = [
       { type: 'eventType1', repo: { name: 'repo1' }, payload: {} },
-      { type: 'eventType2', repo: { name: 'repo1' }, payload: {} }
+      { type: 'eventType2', repo: { name: 'repo1' }, payload: {} },
     ]
     const result = aggregateEvents(input)
     expect(result).toEqual({
-      'repo1': { 'eventType1': { count: 1 }, 'eventType2': { count: 1 } }
+      repo1: { eventType1: { count: 1 }, eventType2: { count: 1 } },
     })
   })
 
   it('should group multiple events by repo and same type to increment count', () => {
     const input = [
       { type: 'eventType1', repo: { name: 'repo1' }, payload: {} },
-      { type: 'eventType1', repo: { name: 'repo1' }, payload: {} }
+      { type: 'eventType1', repo: { name: 'repo1' }, payload: {} },
     ]
     const result = aggregateEvents(input)
     expect(result).toEqual({
-      'repo1': { 'eventType1': { count: 2 } }
+      repo1: { eventType1: { count: 2 } },
     })
   })
 
   it('should include action if available', () => {
-    const input = [{
-      type: 'PushEvent',
-      repo: { name: 'repo1' },
-      payload: { action: 'opened' }
-    }]
+    const input = [
+      {
+        type: 'PushEvent',
+        repo: { name: 'repo1' },
+        payload: { action: 'opened' },
+      },
+    ]
     const result = aggregateEvents(input)
     expect(result).toEqual({
-      'repo1': { 'PushEvent': { action: 'opened', count: 1 } }
+      repo1: { PushEvent: { action: 'opened', count: 1 } },
     })
   })
 
   it('should include ref if available', () => {
-    const input = [{
-      type: 'PushEvent',
-      repo: { name: 'repo1' },
-      payload: { ref: 'main' }
-    }]
+    const input = [
+      {
+        type: 'PushEvent',
+        repo: { name: 'repo1' },
+        payload: { ref: 'main' },
+      },
+    ]
     const result = aggregateEvents(input)
     expect(result).toEqual({
-      'repo1': { 'PushEvent': { ref: 'main', count: 1 } }
+      repo1: { PushEvent: { ref: 'main', count: 1 } },
     })
   })
 
   it('should include ref_type if available', () => {
-    const input = [{
-      type: 'CreateEvent',
-      repo: { name: 'repo1' },
-      payload: { ref_type: 'branch' }
-    }]
+    const input = [
+      {
+        type: 'CreateEvent',
+        repo: { name: 'repo1' },
+        payload: { ref_type: 'branch' },
+      },
+    ]
     const result = aggregateEvents(input)
     expect(result).toEqual({
-      'repo1': { 'CreateEvent': { ref_type: 'branch', count: 1 } }
+      repo1: { CreateEvent: { ref_type: 'branch', count: 1 } },
     })
   })
 
   it('should handle events from multiple repos', () => {
     const input = [
       { type: 'PushEvent', repo: { name: 'user/repo1' }, payload: {} },
-      { type: 'WatchEvent', repo: { name: 'user/repo2' }, payload: {} }
+      { type: 'WatchEvent', repo: { name: 'user/repo2' }, payload: {} },
     ]
     const result = aggregateEvents(input)
     expect(Object.keys(result)).toEqual(['user/repo1', 'user/repo2'])
@@ -87,8 +96,16 @@ describe('aggregateEvents', () => {
 
   it('should overwrite action with last value for same event type', () => {
     const input = [
-      { type: 'IssuesEvent', repo: { name: 'repo1' }, payload: { action: 'opened' } },
-      { type: 'IssuesEvent', repo: { name: 'repo1' }, payload: { action: 'closed' } }
+      {
+        type: 'IssuesEvent',
+        repo: { name: 'repo1' },
+        payload: { action: 'opened' },
+      },
+      {
+        type: 'IssuesEvent',
+        repo: { name: 'repo1' },
+        payload: { action: 'closed' },
+      },
     ]
     const result = aggregateEvents(input)
     expect(result['repo1']['IssuesEvent'].action).toBe('closed')

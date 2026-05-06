@@ -1,4 +1,4 @@
-export function parseArgs () {
+export function parseArgs() {
   const args = process.argv.slice(2)
   const username = args[0]
 

@@ -13,7 +13,7 @@ export type RepoStats = {
   }
 }
 
-export function aggregateEvents (events: Events): RepoStats {
+export function aggregateEvents(events: Events): RepoStats {
   const formattedEvents: RepoStats = events.reduce((acc: RepoStats, event) => {
     const repo = event.repo.name
 
@@ -63,17 +63,23 @@ export const EVENT_MESSAGES = {
   MemberEvent: { template: '- Added collaborator to' },
   PublicEvent: { template: '- Made repo {repo} public' },
   DiscussionEvent: { template: '- {ref_type} discussion in' },
-  GollumEvent: { template: '- Edited wiki in' }
+  GollumEvent: { template: '- Edited wiki in' },
 } as const
 
-export function formatMessage (template: string, data: Record<string, string | number>): string {
+export function formatMessage(
+  template: string,
+  data: Record<string, string | number>,
+): string {
   let result = template
 
   for (const [key, value] of Object.entries(data)) {
     const stringValue = String(value)
 
     if (key === 'action') {
-      result = result.replace(`{${key}}`, stringValue.charAt(0).toUpperCase() + stringValue.slice(1))
+      result = result.replace(
+        `{${key}}`,
+        stringValue.charAt(0).toUpperCase() + stringValue.slice(1),
+      )
     } else {
       result = result.replace(`{${key}}`, stringValue)
     }
