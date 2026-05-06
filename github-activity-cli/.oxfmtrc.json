@@ -6,5 +6,8 @@
   "printWidth": 80,
   "tabWidth": 2,
   "sortImports": true,
-  "sortPackageJson": true
+  "sortPackageJson": true,
+  "bracketSpacing": true,
+  "spaceBeforeFunctionParen": true,
+  "insertFinalNewline": true
 }
