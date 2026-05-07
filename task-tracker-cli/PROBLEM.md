@@ -8,12 +8,12 @@ Este proyecto te va a ayudar a practicar tus habilidades de programación, inclu
 
 La aplicación debe ejecutarse desde la terminal, aceptar acciones e inputs del usuario como argumentos y almacenar las tareas en un archivo JSON. El usuario debe ser capaz de:
 
-* **Agregar, Actualizar y Eliminar** tareas.
-* Marcar una tarea como **en progreso** o **finalizada**.
-* Listar **todas** las tareas.
-* Listar todas las tareas que estén **finalizadas**.
-* Listar todas las tareas que **no estén terminadas**.
-* Listar todas las tareas que estén **en progreso**.
+- **Agregar, Actualizar y Eliminar** tareas.
+- Marcar una tarea como **en progreso** o **finalizada**.
+- Listar **todas** las tareas.
+- Listar todas las tareas que estén **finalizadas**.
+- Listar todas las tareas que **no estén terminadas**.
+- Listar todas las tareas que estén **en progreso**.
 
 ### Restricciones
 
@@ -58,11 +58,11 @@ task-cli list in-progress
 
 Cada tarea debe tener las siguientes propiedades en el JSON:
 
-* `id`: Un identificador único para la tarea.
-* `description`: Una descripción corta.
-* `status`: El estado de la tarea (`todo`, `in-progress`, `done`).
-* `createdAt`: Fecha y hora de creación.
-* `updatedAt`: Fecha y hora de la última actualización.
+- `id`: Un identificador único para la tarea.
+- `description`: Una descripción corta.
+- `status`: El estado de la tarea (`todo`, `in-progress`, `done`).
+- `createdAt`: Fecha y hora de creación.
+- `updatedAt`: Fecha y hora de la última actualización.
 
 > **Importante:** Asegurate de incluir estas propiedades al crear una tarea y de actualizar `updatedAt` cuando realices cambios.
 

@@ -1,6 +1,7 @@
-import { TaskManager } from "./task-manager.js";
-import type { UUID } from "node:crypto";
-import type { Task, TaskStatus } from "./types.js";
+import type { UUID } from 'node:crypto'
+
+import { TaskManager } from './task-manager.js'
+import type { Task, TaskStatus } from './types.js'
 
 export function parseArguments(args: string[], manager: TaskManager): void {
   const [command, ...params] = args
@@ -9,7 +10,7 @@ export function parseArguments(args: string[], manager: TaskManager): void {
     switch (command) {
       case 'add': {
         const description = params[0]
-        
+
         if (!description) {
           console.error('Error: Falta la descripción de la tarea')
           return
@@ -17,9 +18,9 @@ export function parseArguments(args: string[], manager: TaskManager): void {
 
         const task = manager.add(description)
         console.log(`Task agregada - ID: ${task.id}`)
-        break;
+        break
       }
-    
+
       case 'update': {
         const id = params[0]
         const descripcion = params[1]
@@ -37,7 +38,7 @@ export function parseArguments(args: string[], manager: TaskManager): void {
         manager.update(id as UUID, descripcion)
         break
       }
-      
+
       case 'delete': {
         const id = params[0]
 
@@ -54,10 +55,10 @@ export function parseArguments(args: string[], manager: TaskManager): void {
         const statusFilter = params[0] as TaskStatus | undefined
         const validStatuses = ['todo', 'in-progress', 'done']
         if (statusFilter && !validStatuses.includes(statusFilter)) {
-          console.error('Error: Status inválido. Usá: todo, in-progress o done.');
+          console.error('Error: Status inválido. Usá: todo, in-progress o done.')
           return
         }
-        
+
         const tasks: Task[] = manager.list(statusFilter)
 
         if (tasks.length === 0) {
@@ -72,7 +73,7 @@ export function parseArguments(args: string[], manager: TaskManager): void {
       case 'mark-in-progress':
       case 'mark-done': {
         const id = params[0]
-        
+
         if (!id) {
           console.error('Error: Falta el id de la tarea')
           return
@@ -84,10 +85,11 @@ export function parseArguments(args: string[], manager: TaskManager): void {
       }
 
       default:
-        console.log('Comando no reconocido.\n Comandos disponibles: add, update, list, delete, mark-in-progress, mark-done')
+        console.log(
+          'Comando no reconocido.\n Comandos disponibles: add, update, list, delete, mark-in-progress, mark-done',
+        )
     }
   } catch (error) {
     console.error(error instanceof Error ? error.message : 'Hubo un error')
   }
 }
-

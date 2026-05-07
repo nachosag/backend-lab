@@ -2,22 +2,30 @@
   "name": "task-tracker-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsc",
-    "start": "pnpm build && node ./dist/task-cli.js"
-  },
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "bin": {
     "task-cli": "./dist/task-cli.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.14.0",
+  "type": "module",
+  "main": "index.js",
+"scripts": {
+    "build": "tsc",
+    "start": "pnpm build && node ./dist/task-cli.js",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui"
+  },
   "devDependencies": {
     "@types/node": "^25.4.0",
+    "@vitest/ui": "^4.1.5",
+    "oxc": "^1.0.1",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.63.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.5"
   },
-  "type": "module"
+  "packageManager": "pnpm@10.14.0"
 }

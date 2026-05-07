@@ -9,7 +9,7 @@
 ✅ **Actualizar tareas** - Modifica la descripción de una tarea existente  
 ✅ **Eliminar tareas** - Elimina tareas que ya no necesitas  
 ✅ **Cambiar estado** - Marca tareas como en progreso o finalizadas  
-✅ **Persistencia** - Las tareas se guardan automáticamente en un archivo JSON  
+✅ **Persistencia** - Las tareas se guardan automáticamente en un archivo JSON
 
 ## Requisitos Previos
 
@@ -19,16 +19,19 @@
 ## Instalación
 
 1. Clona o descarga el repositorio:
+
 ```bash
 cd task-tracker-cli
 ```
 
 2. Instala las dependencias:
+
 ```bash
 pnpm install
 ```
 
 3. Compila el proyecto:
+
 ```bash
 pnpm build
 ```
@@ -44,17 +47,20 @@ pnpm start [comando] [parámetros]
 ### Comandos Disponibles
 
 #### 1. **add** - Agregar una nueva tarea
+
 ```bash
 pnpm start add "Descripción de la tarea"
 ```
 
 **Ejemplo:**
+
 ```bash
 pnpm start add "Implementar nueva feature"
 # Output: Task agregada - ID: 550e8400-e29b-41d4-a716-446655440000
 ```
 
 #### 2. **list** - Listar tareas
+
 ```bash
 pnpm start list [estado]
 ```
@@ -62,6 +68,7 @@ pnpm start list [estado]
 **Estados válidos:** `todo`, `in-progress`, `done`
 
 **Ejemplos:**
+
 ```bash
 # Listar todas las tareas
 pnpm start list
@@ -77,6 +84,7 @@ pnpm start list done
 ```
 
 **Output:**
+
 ```
 ┌─────────────────────────────────────┬──────────────────────────┬──────────────┬──────────────────────────────┬──────────────────────────────┐
 │ id                                  │ description              │ status       │ createdAt                    │ updatedAt                    │
@@ -86,41 +94,49 @@ pnpm start list done
 ```
 
 #### 3. **update** - Actualizar la descripción de una tarea
+
 ```bash
 pnpm start update [id] "Nueva descripción"
 ```
 
 **Ejemplo:**
+
 ```bash
 pnpm start update "550e8400-e29b-41d4-a716-446655440000" "Refactorizar código"
 ```
 
 #### 4. **delete** - Eliminar una tarea
+
 ```bash
 pnpm start delete [id]
 ```
 
 **Ejemplo:**
+
 ```bash
 pnpm start delete "550e8400-e29b-41d4-a716-446655440000"
 ```
 
 #### 5. **mark-in-progress** - Marcar una tarea como en progreso
+
 ```bash
 pnpm start mark-in-progress [id]
 ```
 
 **Ejemplo:**
+
 ```bash
 pnpm start mark-in-progress "550e8400-e29b-41d4-a716-446655440000"
 ```
 
 #### 6. **mark-done** - Marcar una tarea como finalizada
+
 ```bash
 pnpm start mark-done [id]
 ```
 
 **Ejemplo:**
+
 ```bash
 pnpm start mark-done "550e8400-e29b-41d4-a716-446655440000"
 ```
@@ -130,6 +146,7 @@ pnpm start mark-done "550e8400-e29b-41d4-a716-446655440000"
 Las tareas se almacenan en un archivo `tasks.json` en el directorio actual donde se ejecuta el comando. El archivo se crea automáticamente si no existe.
 
 **Ejemplo de contenido de `tasks.json`:**
+
 ```json
 [
   {
@@ -171,21 +188,25 @@ task-tracker-cli/
 ### Capas de la Aplicación
 
 **1. CLI Parser (`parser.ts`)**
+
 - Interpreta los argumentos de la línea de comandos
 - Valida las entradas del usuario
 - Maneja errores y mensajes
 
 **2. Task Manager (`task-manager.ts`)**
+
 - Lógica de negocio principal
 - Operaciones CRUD de tareas
 - Manejo de estados (todo, in-progress, done)
 
 **3. Repository (`task-repository.ts`)**
+
 - Abstracción de persistencia
 - Lee y escribe en `tasks.json`
 - Crea el archivo automáticamente si no existe
 
 **4. Types (`types.ts`)**
+
 - Definiciones de tipos TypeScript
 - Interfaz `Task`
 - Estados de tareas
@@ -193,14 +214,14 @@ task-tracker-cli/
 ### Tipos de Datos
 
 ```typescript
-type TaskStatus = 'todo' | 'in-progress' | 'done';
+type TaskStatus = 'todo' | 'in-progress' | 'done'
 
 interface Task {
-  id: string;              // UUID único
-  description: string;     // Descripción de la tarea
-  status: TaskStatus;      // Estado actual
-  createdAt: string;       // ISO 8601 timestamp
-  updatedAt: string;       // ISO 8601 timestamp
+  id: string // UUID único
+  description: string // Descripción de la tarea
+  status: TaskStatus // Estado actual
+  createdAt: string // ISO 8601 timestamp
+  updatedAt: string // ISO 8601 timestamp
 }
 ```
 
@@ -236,7 +257,7 @@ La aplicación valida las entradas y maneja los siguientes errores:
 ✅ Timestamps en formato **ISO 8601**  
 ✅ Persistencia automática en **JSON**  
 ✅ Validación de entrada robusto  
-✅ Manejo de errores elegante  
+✅ Manejo de errores elegante
 
 ## Ejemplo de Flujo Completo
 
@@ -275,6 +296,7 @@ npm link
 ```
 
 Luego podrás usar:
+
 ```bash
 task-cli add "Mi tarea"
 task-cli list
@@ -286,11 +308,12 @@ task-cli list
 ✓ Almacenamiento en JSON puro  
 ✓ Argumentos posicionales para entrada de usuario  
 ✓ Manejo elegante de errores y edge cases  
-✓ Creación automática de archivo de almacenamiento  
+✓ Creación automática de archivo de almacenamiento
 
 ## Contribuciones
 
 Este es un proyecto educativo para practicar:
+
 - Desarrollo de CLI
 - Manejo de archivos
 - Gestión de estado
