@@ -1,10 +1,6 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
-  "exclude": [
-    "tests",
-    "dist",
-    "vitest.config.ts"
-  ],
+  "exclude": ["tests", "dist", "vitest.config.ts"],
   "compilerOptions": {
     // File Layout
     "rootDir": "./src",
@@ -14,12 +10,8 @@
     "module": "nodenext",
     "target": "esnext",
     // For nodejs:
-    "lib": [
-      "esnext"
-    ],
-    "types": [
-      "node"
-    ],
+    "lib": ["esnext"],
+    "types": ["node"],
     // and npm install -D @types/node
     // Other Outputs
     "sourceMap": true,

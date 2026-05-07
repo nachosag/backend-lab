@@ -10,12 +10,14 @@
   },
   "type": "module",
   "main": "index.js",
-"scripts": {
+  "scripts": {
     "build": "tsc",
     "start": "pnpm build && node ./dist/task-cli.js",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "lint": "oxlint",
+    "fmt": "oxfmt"
   },
   "devDependencies": {
     "@types/node": "^25.4.0",
