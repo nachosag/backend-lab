@@ -3,7 +3,7 @@
 ## Beginner
 - [ ] Blogging Platfrom API
 - [x] Expense Tracker API
-- [ ] Expense Tracker
+- [ ] Expense Tracker CLI
 - [ ] GitHub Trending CLI
 - [x] GitHub User Activity
 - [ ] Number Guessing Game
