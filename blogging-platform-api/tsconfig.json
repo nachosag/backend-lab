@@ -1,7 +1,7 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
+  "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
-    "extends": "@tsconfig/node22/tsconfig.json",
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
@@ -36,13 +36,13 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "include": [
-      "src/**/*"
-    ],
-    "exclude": [
-      "node_modules",
-      "dist"
-    ],
-  }
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
