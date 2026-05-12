@@ -4,7 +4,7 @@
 
 ### 1.1 Propósito
 
-Desarrollar una API RESTful para una plataforma de blogs personal que permita a los usuarios realizar operaciones CRUD sobre publicaciones. El proyecto tiene como objetivo principal el aprendizaje profundo de TypeScript, Express.js, MongoDB con driver nativo, Docker, y buenas prácticas de testing con Vitest aplicando TDD.
+Desarrollar una API RESTful para una plataforma de blogs personal que permita a los usuarios realizar operaciones CRUD sobre publicaciones. El proyecto tiene como objetivo principal el aprendizaje profundo de TypeScript, Express.js, MongoDB con driver nativo, y buenas prácticas de testing con Vitest aplicando TDD.
 
 ### 1.2 Objetivos de Aprendizaje
 
@@ -12,8 +12,7 @@ Desarrollar una API RESTful para una plataforma de blogs personal que permita a 
 |------|---------------------|
 | **TypeScript** | Tipado estricto, tipos personalizados, generics, manejo de tipos async |
 | **Express.js** | Middlewares, routing, manejo de errores, validación con Zod, Swagger |
-| **MongoDB** | Driver nativo, diseño de esquemas, operaciones CRUD, índices, relaciones embebidas, agregaciones |
-| **Docker** | Dockerfile multi-stage, docker-compose, gestión de variables de entorno |
+| **MongoDB** | Driver nativo, diseño de esquemas, operaciones CRUD, índices, relaciones embebidas, agregaciones, MongoDB Atlas (cloud) |
 | **Testing** | Unit testing, integración, E2E, mocking, alta cobertura (~100%) |
 | **Arquitectura** | Arquitectura en capas, Repository Pattern, Dependency Injection |
 
@@ -31,15 +30,12 @@ Desarrollar una API RESTful para una plataforma de blogs personal que permita a 
 - ✅ Repository Pattern con MongoDB driver nativo
 - ✅ Dependency Injection manual
 - ✅ Manejo centralizado de errores HTTP
-- ✅ Unit tests conVitest
+- ✅ Unit tests con Vitest
 - ✅ Integration tests contra base de datos de prueba
 - ✅ E2E tests simulating requests HTTP
 - ✅ Mocking de dependencias
 - ✅ Cobertura objetivo: ~100%
-- ✅ Dockerfile optimizado para Node.js/TypeScript
-- ✅ Docker-compose para app + MongoDB
 - ✅ Variables de entorno (.env)
-- ✅ Persistencia de volúmenes para desarrollo
 
 ### 2.2 Excluye (Out of Scope)
 
@@ -49,12 +45,13 @@ Desarrollar una API RESTful para una plataforma de blogs personal que permita a 
 - ❌ Upload de imágenes
 - ❌ Comentarios en posts
 - ❌ Tags dinámicos (solo lectura/escritura simple)
+- ❌ Docker (se usa MongoDB Atlas para la base de datos)
 - ❌ Healthchecks en Docker (complejidad innecesaria)
 - ❌ Testing con datos persistentes (usar contenedor efímero o in-memory)
 
 ---
 
-## 3. RequisitosFuncionales
+## 3. Requisitos Funcionales
 
 ### 3.1 Crear Publicación (POST /posts)
 
@@ -138,23 +135,27 @@ interface Post {
 
 ```
 src/
-├── presentation/        # Capa de Presentación (Express)
-│   ├── controllers/   # Manejan requests/responses
-│   ├── middlewares/    # Middlewares Express
-│   └── routes/        # Definiciones de rutas
 ├── application/        # Capa de Aplicación (Lógica de negocio)
-│   └── services/      # Services con lógica de negocio
-├── domain/            # Capa de Dominio (Entidades e interfaces)
-│   ├── entities/     # Entidades del negocio
-│   ├── repositories/ # Interfaces de repositorio
-│   └── errors/       # Errores domain-specific
-├── infrastructure/    # Capa de Infraestructura
-│   ├── repositories/ # Implementaciones de repositorio
-│   ├── database/    # Conexión MongoDB
-│   └── config/      # Configuración
-└── shared/           # Compartido
-    ├── types/       # Tipos compartidos
-    └── utils/       # Utilidades
+│   └── services/       # Services con lógica de negocio
+├── domain/             # Capa de Dominio (Entidades e interfaces)
+│   ├── entities/       # Entidades del negocio
+│   ├── repositories/   # Interfaces de repositorio
+│   └── errors/         # Errores domain-specific
+├── infrastructure/     # Capa de Infraestructura
+│   ├── repositories/   # Implementaciones de repositorio
+│   ├── database/       # Conexión MongoDB
+│   └── config/         # Configuración
+├── presentation/       # Capa de Presentación (Express)
+│   ├── controllers/    # Manejan requests/responses
+│   ├── middlewares/    # Middlewares Express
+│   └── routes/         # Definiciones de rutas
+├── shared/             # Compartido
+│   ├── types/          # Tipos compartidos
+│   └── utils/          # Utilidades
+└── tests/              # Tests
+    ├── unit/           # Tests unitarios
+    ├── integration/    # Tests de integración
+    └── e2e/            # Tests E2E
 ```
 
 ### 5.2 Flujo de una Request
@@ -237,42 +238,25 @@ const postController = new PostController(postService);
 
 ---
 
-## 8. Docker
+## 8. MongoDB Atlas
 
-### 8.1 Servicios
+### 8.1 Configuración
 
-```yaml
-services:
-  app:
-    build: .
-    ports:
-      - "${APP_PORT}:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    env_file:
-      - .env
-    depends_on:
-      - mongodb
-    command: npm run dev
-
-  mongodb:
-    image: mongo:7
-    ports:
-      - "${MONGO_PORT}:27017"
-    volumes:
-      - mongodb_data:/data/db
-```
+El proyecto utiliza MongoDB Atlas como base de datos en la nube. La conexión se configura mediante variables de entorno.
 
 ### 8.2 Variables de Entorno (.env)
 
 ```
 APP_PORT=3000
-MONGO_HOST=mongodb
-MONGO_PORT=27017
-MONGO_DB=blogging-platform
 NODE_ENV=development
+MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-platform?retryWrites=true&w=majority
 ```
+
+### 8.3 Consideraciones de Seguridad
+
+- La URI de conexión nunca se expone en el código fuente
+- Las credenciales se almacenan exclusivamente en `.env`
+- El archivo `.env` está excluido del control de versiones
 
 ---
 
@@ -291,7 +275,7 @@ NODE_ENV=development
 | AC-09 | DELETE /posts/:id | Retorna 204 si eliminado |
 | AC-10 | DELETE /posts/:id | Retorna 404 si no existe |
 | AC-11 | Testing | Coverage >90% total |
-| AC-12 | Docker | app y mongodb corriendo con docker-compose |
+| AC-12 | MongoDB Atlas | app conectándose a MongoDB Atlas con variables de entorno |
 | AC-13 | Swagger | Documentación accesible en /api/docs |
 
 ---
@@ -299,10 +283,10 @@ NODE_ENV=development
 ## 10. Roadmap de Implementación
 
 ### Fase 1: Fundamentos
-- [ ] Setup proyecto TypeScript + Express
-- [ ] Configuración Docker
-- [ ] Conexión a MongoDB
-- [ ] Estructura de carpetas (arquitectura en capas)
+- [x] Setup proyecto TypeScript + Express
+- [x] Configuración de variables de entorno
+- [x] Conexión a MongoDB Atlas
+- [x] Estructura de carpetas (arquitectura en capas)
 
 ### Fase 2: Dominio
 - [ ] Entidad Post
@@ -314,7 +298,7 @@ NODE_ENV=development
 - [ ] Índices
 
 ### Fase 4: Application
-- [ ] PostService (CRUD)
+- [ ] Post Service (CRUD)
 
 ### Fase 5: Presentación
 - [ ] PostController
@@ -338,7 +322,7 @@ NODE_ENV=development
 ### Conceptos Clave a Cubrir
 
 1. **Repository Pattern**: Abstracción de la capa de datos
-2. **Dependency Injection**: Inversión de control sinframework
+2. **Dependency Injection**: Inversión de control sin framework
 3. **TDD**: Ciclo rojo-verde-refactor
 4. **MongoDB Driver**: Operaciones nativas vs ODM
 5. **Arquitectura Hexagonal-lite**: Capas con puertos y adaptadoresimplícitos
@@ -350,3 +334,4 @@ NODE_ENV=development
 - No testear casos de error
 - Variables hardcodeadas
 - No documentar la API
+- Exponer credenciales de base de datos
