@@ -289,7 +289,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 - [x] Estructura de carpetas (arquitectura en capas)
 
 ### Fase 2: Dominio
-- [ ] Entidad Post
+- [x] Entidad Post
 - [ ] Interfaz Repository
 - [ ] Errores del dominio
 
