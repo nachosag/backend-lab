@@ -1,0 +1,29 @@
+context: |
+  Blogging Platform API - Node.js/TypeScript Express REST API
+  Clean architecture with layered structure (Presentation → Application → Domain → Infrastructure)
+  Uses MongoDB Atlas, Zod for validation, Vitest for testing
+  Early stage - connection layer implemented, rest scaffolding empty
+
+strict_tdd: true
+
+testing:
+  runner: vitest
+  command: vitest
+  coverage_command: vitest run --coverage
+  layers:
+    unit: available
+    integration: not_configured
+    e2e: not_configured
+  tools:
+    type_checker: tsc
+    linter: not_configured
+    formatter: not_configured
+
+phase_rules:
+  proposal: required
+  spec: required
+  design: required
+  tasks: required
+  apply: required
+  verify: required
+  archive: required

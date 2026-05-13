@@ -15,6 +15,7 @@ See `_shared/skill-resolver.md` for the full resolution protocol.
 | When creating a GitHub issue, reporting a bug, or requesting a feature | issue-creation | ~/.config/opencode/skills/issue-creation/SKILL.md |
 | When user says "judgment day", "judgment-day", "review adversarial", "dual review", "doble review", "juzgar", "que lo juzguen" | judgment-day | ~/.config/opencode/skills/judgment-day/SKILL.md |
 | When implementing a change, preparing commits, splitting PRs, or planning chained or stacked PRs | work-unit-commits | ~/.config/opencode/skills/work-unit-commits/SKILL.md |
+| When creating new skills, agent instructions, or documenting AI usage patterns | skill-creator | ~/.config/opencode/skills/skill-creator/SKILL.md |
 
 ## Project Skills
 
@@ -84,6 +85,23 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 - A reviewer should understand why each commit exists from its diff and message
 - Each commit should be a candidate chained PR when the change grows
 - If SDD tasks forecast >400-line change, group commits into chained PR slices before implementation
+
+### go-testing
+- Prefer table-driven tests with t.Run(tt.name, ...) for multiple cases
+- Test behavior and state transitions, not implementation details
+- Use t.TempDir() for filesystem tests; keep integration skippable with testing.Short()
+- For Bubbletea: test Model.Update() directly; use teatest only for interactive flows
+- Golden files must be deterministic; update via -update flag
+- Use small mocks/interfaces around system/command boundaries
+
+### skill-creator
+- A skill is an LLM runtime instruction contract, not human documentation
+- Keep body concise: 180-450 token target, max 1000 hard
+- Required sections: Activation Contract, Hard Rules, Decision Gates, Execution Steps, Output Contract, References
+- description: one physical line, YAML-safe, trigger-first, <=250 chars
+- Frontmatter: name, description, license, metadata.author, metadata.version
+- Put supporting material in assets/ or references/, not the main body
+- Do not create skills for trivial, one-off patterns
 
 ### zod
 - Use z.unknown() instead of z.any() for type safety
