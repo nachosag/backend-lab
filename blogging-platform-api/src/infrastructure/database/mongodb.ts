@@ -42,7 +42,7 @@ export class Connection {
     this.isConnected = false
   }
 
-  async getDb () {
+  async getConnection () {
     if ( !this.isConnected ) {
       const client = await this.connect()
       return client.db()
