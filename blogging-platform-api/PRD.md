@@ -294,7 +294,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 - [x] Errores del dominio
 
 ### Fase 3:Infraestructura
-- [ ] Implementación MongoPostRepository
+- [x] Implementación MongoPostRepository (create, findAll, findById, update, delete)
 - [ ] Índices
 
 ### Fase 4: Application
