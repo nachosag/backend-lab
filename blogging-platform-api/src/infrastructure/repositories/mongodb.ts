@@ -1,4 +1,4 @@
-import type { Db, ObjectId } from 'mongodb'
+import { ObjectId, type Db } from 'mongodb'
 import type { Post } from '../../domain/entities/post.js'
 import type { CreatePost, PostRepository, UpdatePost } from '../../domain/repositories/post.js'
 
@@ -12,52 +12,76 @@ export class MongoDB implements PostRepository {
   async create ( data: CreatePost ): Promise<Post> {
     const creationDate = new Date()
 
-    const results = await this.connection.collection( 'posts' ).insertOne( {
+    const result = await this.connection.collection( 'posts' ).insertOne( {
       ...data,
       updatedAt: creationDate,
       createdAt: creationDate
     } )
 
     return {
-      id: results.insertedId.toString(),
+      id: result.insertedId.toString(),
       ...data,
       createdAt: creationDate,
       updatedAt: creationDate
     }
   }
 
+  // TODO: find by term
   async findAll ( _params?: { term: string } ): Promise<Post[]> {
-    const cursor = this.connection.collection<PostDocument>( 'posts' ).find()
-    const results = await cursor.toArray()
+    const collection = this.connection.collection<PostDocument>( 'posts' )
 
-    const posts = this.mapResultsToPosts( results )
+    const results = await collection.find().toArray()
 
-    return posts
+    return this.mapResultsToPosts( results )
   }
 
   async findById ( _params: { id: string } ): Promise<Post | null> {
-    throw new Error( 'Not implemented' )
+    const _id = new ObjectId( _params.id )
+    const collection = this.connection.collection<PostDocument>( 'posts' )
+
+    const result = await collection.findOne( _id )
+    if ( !result ) return null
+
+    return this.mapResultToPost( result )
   }
 
   async update ( _params: { id: string }, _data: UpdatePost ): Promise<Post | null> {
-    throw new Error( 'Not implemented' )
+    const _id = new ObjectId( _params.id )
+    const collection = this.connection.collection<PostDocument>( 'posts' )
+
+    await collection.updateOne( _id, { '$set': _data } )
+    const findResult = await collection.findOne( _id )
+    if ( !findResult ) return null
+
+    return this.mapResultToPost( findResult )
   }
 
   async delete ( _params: { id: string } ): Promise<boolean> {
-    throw new Error( 'Not implemented' )
+    const _id = new ObjectId( _params.id )
+    const collection = this.connection.collection<PostDocument>( 'posts' )
+
+    const deleteResult = await collection.deleteOne( _id )
+
+    return deleteResult.deletedCount === 1
   }
 
   private mapResultsToPosts ( results: PostDocument[] ): Post[] {
     return results.map( ( post ) => {
       const { _id, ...rest } = post
       return {
-        ...rest, // Primero esparzo el documento
-        id: post._id.toString() // Después piso el _id con id
-        // El orden importa
+        ...rest,
+        id: post._id.toString()
       }
     } )
   }
 
+  private mapResultToPost ( result: PostDocument ): Post {
+    const { _id, ...rest } = result
+    return {
+      ...rest,
+      id: result._id.toString()
+    }
+  }
 }
 
 type PostDocument = {
