@@ -1,4 +1,4 @@
-import { ObjectId, type Db } from 'mongodb'
+import { ObjectId, type Db, type Filter } from 'mongodb'
 import type { Post } from '../../domain/entities/post.js'
 import type { CreatePost, PostRepository, UpdatePost } from '../../domain/repositories/post.js'
 
@@ -28,16 +28,12 @@ export class MongoDB implements PostRepository {
 
   async findAll ( _params?: { term: string } ): Promise<Post[]> {
     const collection = this.connection.collection<PostDocument>( 'posts' )
+    const filter: Filter<PostDocument> = {}
 
     const term = _params?.term
 
-    if ( !term ) {
-      const results = await collection.find().toArray()
-      return this.mapResultsToPosts( results )
-    }
-
-    const filter = {
-      $or: [
+    if ( term ) {
+      filter.$or = [
         { title: { $regex: term, $options: 'i' } },
         { content: { $regex: term, $options: 'i' } },
         { category: { $regex: term, $options: 'i' } },
