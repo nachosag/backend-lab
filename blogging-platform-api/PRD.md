@@ -298,7 +298,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 ### Fase 3:Infraestructura
 
 - [x] Implementación MongoPostRepository (create, findAll, findById, update, delete)
-- [ ] Índices
+- [x] Índices (category: 1, createdAt: -1)
 
 ### Fase 4: Application
 

@@ -9,6 +9,17 @@ export class MongoDB implements PostRepository {
     this.connection = connection
   }
 
+  async init (): Promise<void> {
+    await this.connection.collection( 'posts' ).createIndexes( [
+      {
+        key: { category: 1 },
+      },
+      {
+        key: { createdAt: -1 }
+      }
+    ] )
+  }
+
   async create ( data: CreatePost ): Promise<Post> {
     const creationDate = new Date()
 
