@@ -26,11 +26,25 @@ export class MongoDB implements PostRepository {
     }
   }
 
-  // TODO: find by term
   async findAll ( _params?: { term: string } ): Promise<Post[]> {
     const collection = this.connection.collection<PostDocument>( 'posts' )
 
-    const results = await collection.find().toArray()
+    const term = _params?.term
+
+    if ( !term ) {
+      const results = await collection.find().toArray()
+      return this.mapResultsToPosts( results )
+    }
+
+    const filter = {
+      $or: [
+        { title: { $regex: term, $options: 'i' } },
+        { content: { $regex: term, $options: 'i' } },
+        { category: { $regex: term, $options: 'i' } },
+      ]
+    }
+
+    const results = await collection.find( filter ).toArray()
 
     return this.mapResultsToPosts( results )
   }
