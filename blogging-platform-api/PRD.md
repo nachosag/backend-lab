@@ -133,22 +133,24 @@ interface Post {
 
 ### 5.1 Capas
 
+La arquitectura es **Hexagonal (Ports & Adapters)**, también conocida como arquitectura de puertos y adaptadores. Las dependencias apuntan hacia adentro: el núcleo del negocio (`ports/`) no conoce ni depende de Express, MongoDB ni ninguna tecnología externa.
+
 ```
 src/
-├── application/        # Capa de Aplicación (Lógica de negocio)
-│   └── services/       # Services con lógica de negocio
-├── domain/             # Capa de Dominio (Entidades e interfaces)
+├── ports/              # Puertos (Core del negocio)
 │   ├── entities/       # Entidades del negocio
-│   ├── repositories/   # Interfaces de repositorio
+│   ├── repositories/   # Interfaces de repositorio (puertos outbound)
 │   └── errors/         # Errores domain-specific
-├── infrastructure/     # Capa de Infraestructura
-│   ├── repositories/   # Implementaciones de repositorio
-│   ├── database/       # Conexión MongoDB
-│   └── config/         # Configuración
-├── presentation/       # Capa de Presentación (Express)
-│   ├── controllers/    # Manejan requests/responses
-│   ├── middlewares/    # Middlewares Express
-│   └── routes/         # Definiciones de rutas
+├── application/        # Casos de uso (Puertos inbound)
+│   └── services/       # Servicios con lógica de negocio
+├── adapters/           # Adaptadores (implementaciones concretas)
+│   ├── inbound/        # Adaptadores de entrada (HTTP)
+│   │   ├── controllers/# Manejan requests/responses
+│   │   ├── middlewares/ # Middlewares Express
+│   │   └── routes/     # Definiciones de rutas
+│   └── outbound/       # Adaptadores de salida (datos)
+│       ├── repositories/ # Implementaciones de repositorio
+│       └── database/     # Conexión MongoDB
 ├── shared/             # Compartido
 │   ├── types/          # Tipos compartidos
 │   └── utils/          # Utilidades
@@ -161,18 +163,19 @@ src/
 ### 5.2 Flujo de una Request
 
 ```
-HTTP Request → Middleware → Controller → Service → Repository → MongoDB Driver
-                ↓              ↓            ↓           ↓
-           Response    Service      Repository   Result
+HTTP Request → Adapter Inbound (Middleware → Controller) → Application (Service) → Adapter Outbound (Repository) → MongoDB Driver
 ```
+
+Las capas internas (`ports/`, `application/`) no conocen Express ni MongoDB. Los adapters traducen el mundo externo al lenguaje del negocio.
 
 ### 5.3 Dependency Injection
 
 ```typescript
-// Ejemplo de inyección
-const postRepository = new MongoPostRepository(connection);
-const postService = new PostService(postRepository);
-const postController = new PostController(postService);
+// Ejemplo de inyección en la composition root (src/index.ts)
+const connection = await new Connection().getConnection()
+const postRepository = new MongoDB( connection )       // adapters/outbound/
+const postService = new PostService( postRepository )   // application/
+const postController = new PostController( postService ) // adapters/inbound/
 ```
 
 ---
@@ -332,7 +335,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 2. **Dependency Injection**: Inversión de control sin framework
 3. **TDD**: Ciclo rojo-verde-refactor
 4. **MongoDB Driver**: Operaciones nativas vs ODM
-5. **Arquitectura Hexagonal-lite**: Capas con puertos y adaptadoresimplícitos
+5. **Arquitectura Hexagonal (Ports & Adapters)**: Puertos en `ports/`, casos de uso en `application/`, adaptadores en `adapters/`
 
 ### Errores Comunes a Evitar
 

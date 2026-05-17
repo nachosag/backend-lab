@@ -1,5 +1,5 @@
-import { Connection } from './infrastructure/database/mongodb.js'
-import { MongoDB } from './infrastructure/repositories/mongodb.js'
+import { Connection } from './adapters/outbound/database/mongodb.js'
+import { MongoDB } from './adapters/outbound/repositories/mongodb.js'
 
 const connection = await new Connection().getConnection()
 const repo = new MongoDB( connection )

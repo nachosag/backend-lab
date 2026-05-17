@@ -1,6 +1,6 @@
 import { ObjectId, type Db, type Filter } from 'mongodb'
-import type { Post } from '../../domain/entities/post.js'
-import type { CreatePost, PostRepository, UpdatePost } from '../../domain/repositories/post.js'
+import type { Post } from '../../../ports/entities/post.js'
+import type { CreatePost, PostRepository, UpdatePost } from '../../../ports/repositories/post.js'
 
 export class MongoDB implements PostRepository {
   private connection: Db
