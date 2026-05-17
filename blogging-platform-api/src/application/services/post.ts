@@ -9,11 +9,15 @@ export class PostService {
   }
 
   async findAll ( params?: { term: string } ) {
-    throw new Error( 'Not implemented method yet' )
+    return this.repository.findAll( params )
   }
 
   async findById ( params: { id: string } ) {
-    throw new PostNotFound( params.id )
+    const post = await this.repository.findById( { id: params.id } )
+
+    if ( !post ) throw new PostNotFound( params.id )
+
+    return post
   }
 
   async update ( params: { id: string }, data: UpdatePost ) {
