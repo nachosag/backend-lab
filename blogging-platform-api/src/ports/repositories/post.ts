@@ -1,18 +1,15 @@
-import type { Post } from "../entities/post.js"
+import type { Post } from '../entities/post.js'
 
 export interface PostRepository {
-  create ( data: CreatePost ): Promise<Post>
+  create(data: CreatePost): Promise<Post>
 
-  update (
-    params: { id: string },
-    data: UpdatePost,
-  ): Promise<Post | null>
+  update(params: { id: string }, data: UpdatePost): Promise<Post | null>
 
-  delete ( params: { id: string } ): Promise<boolean>
+  delete(params: { id: string }): Promise<boolean>
 
-  findById ( params: { id: string } ): Promise<Post | null>
+  findById(params: { id: string }): Promise<Post | null>
 
-  findAll ( params?: { term: string } ): Promise<Post[]>
+  findAll(params?: { term: string }): Promise<Post[]>
 }
 
 export type CreatePost = {
@@ -23,8 +20,8 @@ export type CreatePost = {
 }
 
 export type UpdatePost = {
-  title: string
-  content: string
-  category: string
-  tags: string[]
+  title?: string
+  content?: string
+  category?: string
+  tags?: string[]
 }

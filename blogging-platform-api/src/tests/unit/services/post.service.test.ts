@@ -163,7 +163,7 @@ const aPost = (overrides: Partial<Post> = {}): Post => {
     title: 'test-title',
     content: 'test-content',
     category: 'test-category',
-    tags: ['test-tag-1', 'test-tag-2'],
+    tags: ['test-tag-1'],
     createdAt: testDate,
     updatedAt: testDate,
     ...overrides,

@@ -305,7 +305,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 
 ### Fase 4: Application
 
-- [ ] Post Service (CRUD)
+- [x] Post Service (CRUD)
 
 ### Fase 5: Presentación
 
