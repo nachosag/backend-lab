@@ -311,7 +311,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 
 - [x] PostController
 - [x] Rutas
-- [ ] Middlewares
+- [x] Middlewares
 - [ ] Validación Zod
 
 ### Fase 6: Testing
