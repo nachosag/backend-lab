@@ -8,13 +8,13 @@ Desarrollar una API RESTful para una plataforma de blogs personal que permita a 
 
 ### 1.2 Objetivos de Aprendizaje
 
-| Área | Objetivos Específicos |
-|------|---------------------|
-| **TypeScript** | Tipado estricto, tipos personalizados, generics, manejo de tipos async |
-| **Express.js** | Middlewares, routing, manejo de errores, validación con Zod, Swagger |
-| **MongoDB** | Driver nativo, diseño de esquemas, operaciones CRUD, índices, relaciones embebidas, agregaciones, MongoDB Atlas (cloud) |
-| **Testing** | Unit testing, integración, E2E, mocking, alta cobertura (~100%) |
-| **Arquitectura** | Arquitectura en capas, Repository Pattern, Dependency Injection |
+| Área             | Objetivos Específicos                                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **TypeScript**   | Tipado estricto, tipos personalizados, generics, manejo de tipos async                                                  |
+| **Express.js**   | Middlewares, routing, manejo de errores, validación con Zod, Swagger                                                    |
+| **MongoDB**      | Driver nativo, diseño de esquemas, operaciones CRUD, índices, relaciones embebidas, agregaciones, MongoDB Atlas (cloud) |
+| **Testing**      | Unit testing, integración, E2E, mocking, alta cobertura (~100%)                                                         |
+| **Arquitectura** | Arquitectura en capas, Repository Pattern, Dependency Injection                                                         |
 
 ---
 
@@ -55,46 +55,46 @@ Desarrollar una API RESTful para una plataforma de blogs personal que permita a 
 
 ### 3.1 Crear Publicación (POST /posts)
 
-| Requisito | Detalle |
-|----------|---------|
-| **Input** | `{ title: string, content: string, category: string, tags: string[] }` |
+| Requisito      | Detalle                                                                                                               |
+| -------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Input**      | `{ title: string, content: string, category: string, tags: string[] }`                                                |
 | **Validación** | Todos los campos requeridos; title: 1-200 chars; content: 1-10000 chars; category: 1-50 chars; tags: array de strings |
-| **Output 201** | `{ id: string, title, content, category, tags, createdAt: ISO8601, updatedAt: ISO8601 }` |
-| **Output 400** | `{ errors: [{ field: string, message: string }] }` |
+| **Output 201** | `{ id: string, title, content, category, tags, createdAt: ISO8601, updatedAt: ISO8601 }`                              |
+| **Output 400** | `{ errors: [{ field: string, message: string }] }`                                                                    |
 
 ### 3.2 Actualizar Publicación (PUT /posts/:id)
 
-| Requisito | Detalle |
-|----------|---------|
-| **Input** | Mismo que POST, todos los campos opcionales |
-| **Validación** | Mismo que POST; id debe existir |
+| Requisito      | Detalle                                          |
+| -------------- | ------------------------------------------------ |
+| **Input**      | Mismo que POST, todos los campos opcionales      |
+| **Validación** | Mismo que POST; id debe existir                  |
 | **Output 200** | Publicación actualizada con updatedAt modificado |
-| **Output 400** | Errores de validación |
-| **Output 404** | Post no encontrado |
+| **Output 400** | Errores de validación                            |
+| **Output 404** | Post no encontrado                               |
 
 ### 3.3 Eliminar Publicación (DELETE /posts/:id)
 
-| Requisito | Detalle |
-|----------|---------|
-| **Input** | ID del post en path |
+| Requisito      | Detalle                        |
+| -------------- | ------------------------------ |
+| **Input**      | ID del post en path            |
 | **Output 204** | Eliminación exitosa (sin body) |
-| **Output 404** | Post no encontrado |
+| **Output 404** | Post no encontrado             |
 
 ### 3.4 Obtener Un Post (GET /posts/:id)
 
-| Requisito | Detalle |
-|----------|---------|
-| **Input** | ID del post en path |
+| Requisito      | Detalle                  |
+| -------------- | ------------------------ |
+| **Input**      | ID del post en path      |
 | **Output 200** | Datos completos del post |
-| **Output 404** | Post no encontrado |
+| **Output 404** | Post no encontrado       |
 
 ### 3.5 ObtenerTodos los Posts (GET /posts)
 
-| Requisito | Detalle |
-|----------|---------|
-| **Input** | Query param opcional: `term` (string) |
-| **Filtro** | Búsqueda en title, content, category (case-insensitive, parcial) |
-| **Output 200** | Array de posts (vacío si no hay resultados) |
+| Requisito      | Detalle                                                          |
+| -------------- | ---------------------------------------------------------------- |
+| **Input**      | Query param opcional: `term` (string)                            |
+| **Filtro**     | Búsqueda en title, content, category (case-insensitive, parcial) |
+| **Output 200** | Array de posts (vacío si no hay resultados)                      |
 
 ---
 
@@ -116,12 +116,12 @@ interface Post {
 
 ### 4.2 Índices Sugeridos
 
-| Índice | Campos | Propósito |
-|--------|--------|----------|
-| `_id` | _id | Primary key (automático) |
-| `title_text` | title (text) | Búsqueda por título |
-| `content_text` | content (text) | Búsqueda por contenido |
-| `category` | category | Filter rápido por categoría |
+| Índice         | Campos         | Propósito                   |
+| -------------- | -------------- | --------------------------- |
+| `_id`          | \_id           | Primary key (automático)    |
+| `title_text`   | title (text)   | Búsqueda por título         |
+| `content_text` | content (text) | Búsqueda por contenido      |
+| `category`     | category       | Filter rápido por categoría |
 
 ### 4.3 Relaciones Embebidas
 
@@ -133,22 +133,24 @@ interface Post {
 
 ### 5.1 Capas
 
+La arquitectura es **Hexagonal (Ports & Adapters)**, también conocida como arquitectura de puertos y adaptadores. Las dependencias apuntan hacia adentro: el núcleo del negocio (`ports/`) no conoce ni depende de Express, MongoDB ni ninguna tecnología externa.
+
 ```
 src/
-├── application/        # Capa de Aplicación (Lógica de negocio)
-│   └── services/       # Services con lógica de negocio
-├── domain/             # Capa de Dominio (Entidades e interfaces)
+├── ports/              # Puertos (Core del negocio)
 │   ├── entities/       # Entidades del negocio
-│   ├── repositories/   # Interfaces de repositorio
+│   ├── repositories/   # Interfaces de repositorio (puertos outbound)
 │   └── errors/         # Errores domain-specific
-├── infrastructure/     # Capa de Infraestructura
-│   ├── repositories/   # Implementaciones de repositorio
-│   ├── database/       # Conexión MongoDB
-│   └── config/         # Configuración
-├── presentation/       # Capa de Presentación (Express)
-│   ├── controllers/    # Manejan requests/responses
-│   ├── middlewares/    # Middlewares Express
-│   └── routes/         # Definiciones de rutas
+├── application/        # Casos de uso (Puertos inbound)
+│   └── services/       # Servicios con lógica de negocio
+├── adapters/           # Adaptadores (implementaciones concretas)
+│   ├── inbound/        # Adaptadores de entrada (HTTP)
+│   │   ├── controllers/# Manejan requests/responses
+│   │   ├── middlewares/ # Middlewares Express
+│   │   └── routes/     # Definiciones de rutas
+│   └── outbound/       # Adaptadores de salida (datos)
+│       ├── repositories/ # Implementaciones de repositorio
+│       └── database/     # Conexión MongoDB
 ├── shared/             # Compartido
 │   ├── types/          # Tipos compartidos
 │   └── utils/          # Utilidades
@@ -161,18 +163,19 @@ src/
 ### 5.2 Flujo de una Request
 
 ```
-HTTP Request → Middleware → Controller → Service → Repository → MongoDB Driver
-                ↓              ↓            ↓           ↓
-           Response    Service      Repository   Result
+HTTP Request → Adapter Inbound (Middleware → Controller) → Application (Service) → Adapter Outbound (Repository) → MongoDB Driver
 ```
+
+Las capas internas (`ports/`, `application/`) no conocen Express ni MongoDB. Los adapters traducen el mundo externo al lenguaje del negocio.
 
 ### 5.3 Dependency Injection
 
 ```typescript
-// Ejemplo de inyección
-const postRepository = new MongoPostRepository(connection);
-const postService = new PostService(postRepository);
-const postController = new PostController(postService);
+// Ejemplo de inyección en la composition root (src/index.ts)
+const connection = await new Connection().getConnection()
+const postRepository = new MongoDB( connection )       // adapters/outbound/
+const postService = new PostService( postRepository )   // application/
+const postController = new PostController( postService ) // adapters/inbound/
 ```
 
 ---
@@ -181,20 +184,20 @@ const postController = new PostController(postService);
 
 ### 6.1 Niveles de Testing
 
-| Nivel | Objetivos | Cubertura Objetivo |
-|-------|-----------|------------------|
-| **Unit** | Services, Controllers, Utils | ~100% |
-| **Integration** | Repositories, Controllers con DB | ~90% |
-| **E2E** | Endpoints completos HTTP | Cobertura de smoke tests |
+| Nivel           | Objetivos                        | Cubertura Objetivo       |
+| --------------- | -------------------------------- | ------------------------ |
+| **Unit**        | Services, Controllers, Utils     | ~100%                    |
+| **Integration** | Repositories, Controllers con DB | ~90%                     |
+| **E2E**         | Endpoints completos HTTP         | Cobertura de smoke tests |
 
 ### 6.2 Tech Stack de Testing
 
-| Herramienta | Uso |
-|------------|-----|
-| **Vitest** | Test runner principal |
-| **supertest** | Testing HTTP endpoints |
+| Herramienta               | Uso                           |
+| ------------------------- | ----------------------------- |
+| **Vitest**                | Test runner principal         |
+| **supertest**             | Testing HTTP endpoints        |
 | **mongodb-memory-server** | MongoDB en memoria para tests |
-| **Vitest Coverage** | Istanbul/v8 para coverage |
+| **Vitest Coverage**       | Istanbul/v8 para coverage     |
 
 ### 6.3 Flujo TDD
 
@@ -211,24 +214,24 @@ const postController = new PostController(postService);
 
 ### 7.1 Endpoints
 
-| Método | Path | Descripción |
-|--------|------|------------|
-| POST | /posts | Crear post |
-| GET | /posts | Listar posts (con filtro opcional) |
-| GET | /posts/:id | Obtener post por ID |
-| PUT | /posts/:id | Actualizar post |
-| DELETE | /posts/:id | Eliminar post |
+| Método | Path       | Descripción                        |
+| ------ | ---------- | ---------------------------------- |
+| POST   | /posts     | Crear post                         |
+| GET    | /posts     | Listar posts (con filtro opcional) |
+| GET    | /posts/:id | Obtener post por ID                |
+| PUT    | /posts/:id | Actualizar post                    |
+| DELETE | /posts/:id | Eliminar post                      |
 
 ### 7.2 Códigos de Estado
 
-| Código | Uso |
-|--------|-----|
-| 200 | OK |
-| 201 | Created |
-| 204 | No Content |
-| 400 | Bad Request |
-| 404 | Not Found |
-| 500 | Internal Server Error |
+| Código | Uso                   |
+| ------ | --------------------- |
+| 200    | OK                    |
+| 201    | Created               |
+| 204    | No Content            |
+| 400    | Bad Request           |
+| 404    | Not Found             |
+| 500    | Internal Server Error |
 
 ### 7.3 Documentación Swagger
 
@@ -262,56 +265,63 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 
 ## 9. Criterios de Aceptación
 
-| ID | Feature | Criterio |
-|----|---------|----------|
-| AC-01 | POST /posts | Retorna 201 + post creado con id y timestamps |
-| AC-02 | POST /posts | Retorna 400 si validación falla |
-| AC-03 | GET /posts | Retorna 200 con array de posts |
-| AC-04 | GET /posts?term | Filtra posts por term en title/content/category |
-| AC-05 | GET /posts/:id | Retorna 200 con post específico |
-| AC-06 | GET /posts/:id | Retorna 404 si no existe |
-| AC-07 | PUT /posts/:id | Retorna 200 + post actualizado |
-| AC-08 | PUT /posts/:id | Retorna 404 si no existe |
-| AC-09 | DELETE /posts/:id | Retorna 204 si eliminado |
-| AC-10 | DELETE /posts/:id | Retorna 404 si no existe |
-| AC-11 | Testing | Coverage >90% total |
-| AC-12 | MongoDB Atlas | app conectándose a MongoDB Atlas con variables de entorno |
-| AC-13 | Swagger | Documentación accesible en /api/docs |
+| ID    | Feature           | Criterio                                                  |
+| ----- | ----------------- | --------------------------------------------------------- |
+| AC-01 | POST /posts       | Retorna 201 + post creado con id y timestamps             |
+| AC-02 | POST /posts       | Retorna 400 si validación falla                           |
+| AC-03 | GET /posts        | Retorna 200 con array de posts                            |
+| AC-04 | GET /posts?term   | Filtra posts por term en title/content/category           |
+| AC-05 | GET /posts/:id    | Retorna 200 con post específico                           |
+| AC-06 | GET /posts/:id    | Retorna 404 si no existe                                  |
+| AC-07 | PUT /posts/:id    | Retorna 200 + post actualizado                            |
+| AC-08 | PUT /posts/:id    | Retorna 404 si no existe                                  |
+| AC-09 | DELETE /posts/:id | Retorna 204 si eliminado                                  |
+| AC-10 | DELETE /posts/:id | Retorna 404 si no existe                                  |
+| AC-11 | Testing           | Coverage >90% total                                       |
+| AC-12 | MongoDB Atlas     | app conectándose a MongoDB Atlas con variables de entorno |
+| AC-13 | Swagger           | Documentación accesible en /api/docs                      |
 
 ---
 
 ## 10. Roadmap de Implementación
 
 ### Fase 1: Fundamentos
+
 - [x] Setup proyecto TypeScript + Express
 - [x] Configuración de variables de entorno
 - [x] Conexión a MongoDB Atlas
 - [x] Estructura de carpetas (arquitectura en capas)
 
 ### Fase 2: Dominio
+
 - [x] Entidad Post
 - [x] Interfaz Repository
 - [x] Errores del dominio
 
 ### Fase 3:Infraestructura
-- [ ] Implementación MongoPostRepository
-- [ ] Índices
+
+- [x] Implementación MongoPostRepository (create, findAll, findById, update, delete)
+- [x] Índices (category: 1, createdAt: -1)
 
 ### Fase 4: Application
-- [ ] Post Service (CRUD)
+
+- [x] Post Service (CRUD)
 
 ### Fase 5: Presentación
-- [ ] PostController
-- [ ] Rutas
-- [ ] Middlewares
-- [ ] Validación Zod
+
+- [x] PostController
+- [x] Rutas
+- [x] Middlewares
+- [x] Validación Zod
 
 ### Fase 6: Testing
+
 - [ ] Unit tests (services, controllers)
 - [ ] Integration tests (repositories)
 - [ ] E2E tests
 
 ### Fase 7: Documentación
+
 - [ ] Swagger/OpenAPI
 - [ ] README
 
@@ -325,7 +335,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 2. **Dependency Injection**: Inversión de control sin framework
 3. **TDD**: Ciclo rojo-verde-refactor
 4. **MongoDB Driver**: Operaciones nativas vs ODM
-5. **Arquitectura Hexagonal-lite**: Capas con puertos y adaptadoresimplícitos
+5. **Arquitectura Hexagonal (Ports & Adapters)**: Puertos en `ports/`, casos de uso en `application/`, adaptadores en `adapters/`
 
 ### Errores Comunes a Evitar
 

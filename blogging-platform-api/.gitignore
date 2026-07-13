@@ -1,2 +1,5 @@
-.atl
+.atl/
 .pi/
+.pi-lens/
+.env
+.codegraph/
