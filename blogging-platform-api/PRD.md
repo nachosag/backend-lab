@@ -309,7 +309,7 @@ MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/blogging-pl
 
 ### Fase 5: Presentación
 
-- [ ] PostController
+- [x] PostController
 - [ ] Rutas
 - [ ] Middlewares
 - [ ] Validación Zod
