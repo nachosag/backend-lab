@@ -14,12 +14,10 @@ const updateSchema = z.object({
   tags: z.array(z.string()).min(1).optional(),
 })
 
-export function createPostSchema(data: any) {
-  const result = PostSchema.safeParse(data)
-  return result.success
+export function createPostSchema(data: unknown) {
+  return PostSchema.safeParse(data)
 }
 
-export function updatePostSchema(data: any) {
-  const result = updateSchema.safeParse(data)
-  return result.success
+export function updatePostSchema(data: unknown) {
+  return updateSchema.safeParse(data)
 }
