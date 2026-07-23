@@ -1,0 +1,30 @@
+context: |
+  Clean Architecture practice project (Uncle Bob's)
+  Greenfield — no code yet, no stack configured yet
+  Planned tech: TypeScript, TDD with Vitest
+  Architecture: Clean Architecture (entities, use cases, interface adapters, frameworks & drivers)
+  Uses pnpm as package manager (monorepo convention)
+
+strict_tdd: false
+
+testing:
+  runner: not_configured
+  command: null
+  coverage_command: null
+  layers:
+    unit: not_configured
+    integration: not_configured
+    e2e: not_configured
+  tools:
+    type_checker: not_configured
+    linter: not_configured
+    formatter: not_configured
+
+phase_rules:
+  proposal: required
+  spec: required
+  design: required
+  tasks: required
+  apply: required
+  verify: required
+  archive: required
