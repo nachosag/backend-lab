@@ -75,19 +75,19 @@ Chain strategy: pending
 **What to build**: `src/entities/order-status.ts` — const object + type + transition map + `canTransition(from, to)` + `assertValidTransition(from, to)`.
 
 **Tests to write first (TDD)**:
-- [ ] DRAFT → PENDING is valid
-- [ ] PENDING → CONFIRMED is valid
-- [ ] PENDING → CANCELLED is valid
-- [ ] CONFIRMED → SHIPPED is valid
-- [ ] CONFIRMED → CANCELLED is valid
-- [ ] SHIPPED → DELIVERED is valid
-- [ ] DRAFT → CONFIRMED throws ConflictError
-- [ ] CANCELLED → DRAFT throws ConflictError
-- [ ] DELIVERED → CANCELLED throws ConflictError
+- [x] DRAFT → PENDING is valid
+- [x] PENDING → CONFIRMED is valid
+- [x] PENDING → CANCELLED is valid
+- [x] CONFIRMED → SHIPPED is valid
+- [x] CONFIRMED → CANCELLED is valid
+- [x] SHIPPED → DELIVERED is valid
+- [x] DRAFT → CONFIRMED throws ConflictError
+- [x] CANCELLED → DRAFT throws ConflictError
+- [x] DELIVERED → CANCELLED throws ConflictError
 
 **Acceptance criteria**:
-- [ ] All 6 valid transitions pass
-- [ ] All invalid transitions throw `ConflictError`
+- [x] All 6 valid transitions pass
+- [x] All invalid transitions throw `ConflictError`
 
 ---
 
