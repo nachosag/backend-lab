@@ -101,15 +101,15 @@ Chain strategy: pending
 **What to build**: `src/entities/payment-status.ts` — const object + type + transition map + `canTransition` + `assertValidTransition`.
 
 **Tests to write first (TDD)**:
-- [ ] PENDING → COMPLETED is valid
-- [ ] PENDING → FAILED is valid
-- [ ] COMPLETED → REFUNDED is valid
-- [ ] FAILED → COMPLETED throws ConflictError
-- [ ] REFUNDED → COMPLETED throws ConflictError
+- [x] PENDING → COMPLETED is valid
+- [x] PENDING → FAILED is valid
+- [x] COMPLETED → REFUNDED is valid
+- [x] FAILED → COMPLETED throws ConflictError
+- [x] REFUNDED → COMPLETED throws ConflictError
 
 **Acceptance criteria**:
-- [ ] All 3 valid transitions pass
-- [ ] Invalid transitions throw `ConflictError`
+- [x] All 3 valid transitions pass
+- [x] Invalid transitions throw `ConflictError`
 
 ---
 
