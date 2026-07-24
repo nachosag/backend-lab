@@ -37,12 +37,12 @@ Chain strategy: pending
 **What to build**: `pnpm init`, install deps (`typescript`, `vitest`, `express`, `zod`, `jsonwebtoken`, `bcrypt`, `supertest`, `@types/*`, `tsx`), `tsconfig.json` (strict, nodenext), `vitest.config.ts`, `package.json` scripts (`dev`, `build`, `test`, `test:unit`, `test:integration`).
 
 **Tests to write first (TDD)**:
-- [ ] `pnpm test` runs and reports 0 tests (no failures)
+- [x] `pnpm test` runs and reports 0 tests (no failures)
 
 **Acceptance criteria**:
-- [ ] `pnpm install` succeeds
-- [ ] `pnpm test` runs with 0 failures
-- [ ] `pnpm build` compiles with no errors
+- [x] `pnpm install` succeeds
+- [x] `pnpm test` runs with 0 failures
+- [x] `pnpm build` compiles with no errors
 
 ---
 
@@ -56,12 +56,12 @@ Chain strategy: pending
 **What to build**: `src/shared/errors.ts` (AppError, ValidationError, UnauthorizedError, ForbiddenError, NotFoundError, ConflictError), `src/shared/ids.ts` (generateId using crypto.randomUUID).
 
 **Tests to write first (TDD)**:
-- [ ] Each error class has correct statusCode
-- [ ] generateId returns a valid UUID string
+- [x] Each error class has correct statusCode
+- [x] generateId returns a valid UUID string
 
 **Acceptance criteria**:
-- [ ] `ValidationError` → 400, `UnauthorizedError` → 401, `ForbiddenError` → 403, `NotFoundError` → 404, `ConflictError` → 409
-- [ ] `generateId()` returns different values on each call
+- [x] `ValidationError` → 400, `UnauthorizedError` → 401, `ForbiddenError` → 403, `NotFoundError` → 404, `ConflictError` → 409
+- [x] `generateId()` returns different values on each call
 
 ---
 
