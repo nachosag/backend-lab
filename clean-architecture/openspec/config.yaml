@@ -1,22 +1,24 @@
 context: |
   Clean Architecture practice project (Uncle Bob's)
-  Greenfield — no code yet, no stack configured yet
-  Planned tech: TypeScript, TDD with Vitest
+  Stack: TypeScript 7.0.2, Express 5.2.1, Vitest 4.1.10, Zod 4.4.3, pnpm
   Architecture: Clean Architecture (entities, use cases, interface adapters, frameworks & drivers)
-  Uses pnpm as package manager (monorepo convention)
+  Source: src/ (entities/, shared/, index.ts)
+  Tests: tests/ (entities/, shared/)
 
-strict_tdd: false
+strict_tdd: true
 
 testing:
-  runner: not_configured
-  command: null
+  runner: vitest
+  command: pnpm test
+  unit_command: pnpm test:unit
+  integration_command: pnpm test:integration
   coverage_command: null
   layers:
-    unit: not_configured
-    integration: not_configured
+    unit: available
+    integration: available
     e2e: not_configured
   tools:
-    type_checker: not_configured
+    type_checker: tsc (pnpm build)
     linter: not_configured
     formatter: not_configured
 

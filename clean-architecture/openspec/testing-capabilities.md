@@ -1,20 +1,23 @@
 ## Testing Capabilities
 
-**Strict TDD Mode**: disabled
+**Strict TDD Mode**: enabled
 **Detected**: 2026-07-23
+**Updated**: 2026-07-23
 
 ### Test Runner
 
-- Command: `—`
-- Framework: not detected (greenfield project)
+- Command: `pnpm test`
+- Framework: Vitest 4.1.10
+- Config: `vitest.config.ts` (globals: true, environment: node)
+- Pattern: `tests/**/*.test.ts`
 
 ### Test Layers
 
-| Layer       | Available | Tool |
-| ----------- | --------- | ---- |
-| Unit        | ❌        | —    |
-| Integration | ❌        | —    |
-| E2E         | ❌        | —    |
+| Layer       | Available | Command                     |
+| ----------- | --------- | --------------------------- |
+| Unit        | ✅        | `pnpm test:unit`            |
+| Integration | ✅        | `pnpm test:integration`     |
+| E2E         | ❌        | —                           |
 
 ### Coverage
 
@@ -23,15 +26,14 @@
 
 ### Quality Tools
 
-| Tool         | Available | Command |
-| ------------ | --------- | ------- |
-| Linter       | ❌        | —       |
-| Type checker | ❌        | —       |
-| Formatter    | ❌        | —       |
+| Tool         | Available | Command     |
+| ------------ | --------- | ----------- |
+| Type checker | ✅        | `pnpm build` (tsc) |
+| Linter       | ❌        | —           |
+| Formatter    | ❌        | —           |
 
 ### Notes
 
-- No package.json, tsconfig, or config files exist yet
-- strict_tdd is disabled because no test runner is installed
-- Once Vitest is configured, update `openspec/config.yaml` `strict_tdd` to `true` and fill in the runner/tool details
-- Monorepo convention uses pnpm, Vitest, TypeScript strict mode
+- TypeScript 7.0.2 with strict config (nodenext, verbatimModuleSyntax, noUncheckedIndexedAccess, exactOptionalPropertyTypes)
+- pnpm as package manager
+- strict_tdd enabled — Vitest is configured and functional
