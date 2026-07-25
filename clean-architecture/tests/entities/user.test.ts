@@ -12,6 +12,9 @@ describe('createUser', () => {
       .parameter(0)
       .toMatchObjectType<{ email: string; passwordHash: string }>()
   })
+  it('should return a user', () => {
+    expectTypeOf(createUser).returns.toEqualTypeOf<User>()
+  })
   it('should return a valid user', () => {
     const input = {
       email: 'test@email.com',
@@ -20,7 +23,6 @@ describe('createUser', () => {
 
     const user = createUser(input)
 
-    expectTypeOf(createUser).returns.toEqualTypeOf<User>()
     expect(user).toMatchObject({
       id: expect.any(String),
       email: input.email,
