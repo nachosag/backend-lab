@@ -1,0 +1,36 @@
+import { describe, it, expect, expectTypeOf } from 'vitest'
+
+import { createUser, User } from '../../src/entities/user'
+import { ValidationError } from '../../src/shared/errors'
+
+describe('createUser', () => {
+  it('should be a function', () => {
+    expectTypeOf(createUser).toBeFunction()
+  })
+  it('should accept an object as parameter', () => {
+    expectTypeOf(createUser)
+      .parameter(0)
+      .toMatchObjectType<{ email: string; passwordHash: string }>()
+  })
+  it('should return a valid user', () => {
+    const input = {
+      email: 'test@email.com',
+      passwordHash: 'hashedPassword',
+    }
+
+    const user = createUser(input)
+
+    expectTypeOf(createUser).returns.toEqualTypeOf<User>()
+    expect(user).toMatchObject({
+      id: expect.any(String),
+      email: input.email,
+      passwordHash: input.passwordHash,
+      createdAt: expect.any(Date),
+    })
+  })
+  it('should throw an error if email is empty', () => {
+    expect(() =>
+      createUser({ email: '', passwordHash: 'hashedPassword' }),
+    ).toThrow(ValidationError)
+  })
+})
