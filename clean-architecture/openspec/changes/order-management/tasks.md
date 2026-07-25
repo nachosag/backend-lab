@@ -142,13 +142,13 @@ Chain strategy: pending
 **What to build**: `src/entities/customer.ts` — interface + factory. Fields: id, userId, name, email, phone?, createdAt.
 
 **Tests to write first (TDD)**:
-- [ ] Customer with valid fields creates successfully
-- [ ] Customer with empty name throws ValidationError
-- [ ] Customer with invalid email throws ValidationError
+- [x] Customer with valid fields creates successfully
+- [x] Customer with empty name throws ValidationError
+- [x] Customer with invalid email throws ValidationError
 
 **Acceptance criteria**:
-- [ ] name required, email validated, phone optional
-- [ ] Entity interface matches design
+- [x] name required, email validated, phone optional
+- [x] Entity interface matches design
 
 ---
 
