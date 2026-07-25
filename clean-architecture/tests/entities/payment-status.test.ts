@@ -1,31 +1,39 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, expectTypeOf, it } from 'vitest'
 
 import {
   canTransition,
   assertValidTransition,
+  PaymentStatus,
 } from '../../src/entities/payment-status'
 import { ConflictError } from '../../src/shared/errors'
 
 describe('canTransition', () => {
   it('should be a function', () => {
-    expect(canTransition).toBeInstanceOf(Function)
+    expectTypeOf(canTransition).toBeFunction()
   })
-  it('should accept two parameters', () => {
-    expect(canTransition.length).toBe(2)
+  it('should accept two PaymentStatus parameters', () => {
+    expectTypeOf(canTransition).parameters.toEqualTypeOf<
+      [PaymentStatus, PaymentStatus]
+    >()
   })
   it('should return a boolean', () => {
-    expect(canTransition('PENDING', 'COMPLETED')).toBeTypeOf('boolean')
+    expectTypeOf(canTransition).returns.toBeBoolean()
   })
 })
 
 describe('assertValidTransition', () => {
   it('should be a function', () => {
-    expect(assertValidTransition).toBeInstanceOf(Function)
+    expectTypeOf(assertValidTransition).toBeFunction()
   })
-  it('should accept to parameters', () => {
-    expect(assertValidTransition.length).toBe(2)
+  it('should accept two PaymentStatus parameters', () => {
+    expectTypeOf(assertValidTransition).parameters.toEqualTypeOf<
+      [PaymentStatus, PaymentStatus]
+    >()
   })
-  it('should throw a ConflicError if transition is invalid', () => {
+  it('should return void', () => {
+    expectTypeOf(assertValidTransition).returns.toBeVoid()
+  })
+  it('should throw a ConflictError if transition is invalid', () => {
     expect(() => assertValidTransition('REFUNDED', 'COMPLETED')).toThrow(
       ConflictError,
     )

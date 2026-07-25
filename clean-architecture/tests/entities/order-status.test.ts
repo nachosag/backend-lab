@@ -1,10 +1,39 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, expectTypeOf, it } from 'vitest'
 
 import {
   canTransition,
   assertValidTransition,
+  OrderStatus,
 } from '../../src/entities/order-status'
 import { ConflictError } from '../../src/shared/errors'
+
+describe('canTransition', () => {
+  it('should be a function', () => {
+    expectTypeOf(canTransition).toBeFunction()
+  })
+  it('should accept two OrderStatus parameters', () => {
+    expectTypeOf(canTransition).parameters.toEqualTypeOf<
+      [OrderStatus, OrderStatus]
+    >()
+  })
+  it('should return a boolean', () => {
+    expectTypeOf(canTransition).returns.toBeBoolean()
+  })
+})
+
+describe('assertValidTransition', () => {
+  it('should be a function', () => {
+    expectTypeOf(assertValidTransition).toBeFunction()
+  })
+  it('should accept two OrderStatus parameters', () => {
+    expectTypeOf(assertValidTransition).parameters.toEqualTypeOf<
+      [OrderStatus, OrderStatus]
+    >()
+  })
+  it('should return void', () => {
+    expectTypeOf(assertValidTransition).returns.toBeVoid()
+  })
+})
 
 describe('OrderStatus state machine', () => {
   it('DRAFT → PENDING is valid', () => {

@@ -123,12 +123,12 @@ Chain strategy: pending
 **What to build**: `src/entities/user.ts` — interface + factory function. Fields: id, email, passwordHash, createdAt.
 
 **Tests to write first (TDD)**:
-- [ ] User with valid fields is created successfully
-- [ ] User with empty email throws ValidationError
+- [x] User with valid fields is created successfully
+- [x] User with empty email throws ValidationError
 
 **Acceptance criteria**:
-- [ ] Entity interface matches design
-- [ ] Validation rejects empty email
+- [x] Entity interface matches design
+- [x] Validation rejects empty email
 
 ---
 

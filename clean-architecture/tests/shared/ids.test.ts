@@ -1,13 +1,13 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, expectTypeOf, it } from 'vitest'
 
 import { generateId } from '../../src/shared/ids'
 
 describe('generateId', () => {
   it('should be a function', () => {
-    expect(generateId).toBeInstanceOf(Function)
+    expectTypeOf(generateId).toBeFunction()
   })
   it('should return a string', () => {
-    expect(generateId()).toBeTypeOf('string')
+    expectTypeOf(generateId).returns.toBeString()
   })
   it('should be a valid UUID', () => {
     const UUID_V4 =
