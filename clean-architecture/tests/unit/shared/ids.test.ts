@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
 
-import { generateId } from '../../src/shared/ids'
+import { generateId } from '../../../src/shared/ids'
 
 describe('generateId', () => {
   it('should be a function', () => {

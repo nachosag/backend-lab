@@ -4,8 +4,8 @@ import {
   canTransition,
   assertValidTransition,
   PaymentStatus,
-} from '../../src/entities/payment-status'
-import { ConflictError } from '../../src/shared/errors'
+} from '../../../src/entities/payment-status'
+import { ConflictError } from '../../../src/shared/errors'
 
 describe('canTransition', () => {
   it('should be a function', () => {

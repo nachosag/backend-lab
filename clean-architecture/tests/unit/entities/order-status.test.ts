@@ -4,8 +4,8 @@ import {
   canTransition,
   assertValidTransition,
   OrderStatus,
-} from '../../src/entities/order-status'
-import { ConflictError } from '../../src/shared/errors'
+} from '../../../src/entities/order-status'
+import { ConflictError } from '../../../src/shared/errors'
 
 describe('canTransition', () => {
   it('should be a function', () => {

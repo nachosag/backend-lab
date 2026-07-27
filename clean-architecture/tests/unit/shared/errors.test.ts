@@ -6,7 +6,7 @@ import {
   NotFoundError,
   UnauthorizedError,
   ValidationError,
-} from '../../src/shared/errors'
+} from '../../../src/shared/errors'
 
 describe('Error clases', () => {
   it.each([

@@ -1,7 +1,7 @@
 import { describe, it, expect, expectTypeOf } from 'vitest'
 
-import { createUser, User } from '../../src/entities/user'
-import { ValidationError } from '../../src/shared/errors'
+import { createUser, User } from '../../../src/entities/user'
+import { ValidationError } from '../../../src/shared/errors'
 
 describe('createUser', () => {
   it('should be a function', () => {

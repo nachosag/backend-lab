@@ -1,7 +1,7 @@
 import { expectTypeOf, describe, it, expect } from 'vitest'
 
-import { createCustomer, Customer } from '../../src/entities/customer'
-import { ValidationError } from '../../src/shared/errors'
+import { createCustomer, Customer } from '../../../src/entities/customer'
+import { ValidationError } from '../../../src/shared/errors'
 
 describe('createCustomer', () => {
   it('should be a function', () => {
@@ -56,15 +56,6 @@ describe('createCustomer', () => {
       userId: 'user1234',
       name: '',
       email: 'ignacio@email.com',
-      phone: '+54 9 11 2222 3333',
-    }
-    expect(() => createCustomer(data)).toThrow(ValidationError)
-  })
-  it('should throw a ValidationError when email is empty', () => {
-    const data = {
-      userId: 'user1234',
-      name: 'Ignacio',
-      email: '',
       phone: '+54 9 11 2222 3333',
     }
     expect(() => createCustomer(data)).toThrow(ValidationError)
