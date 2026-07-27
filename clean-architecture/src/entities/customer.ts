@@ -1,3 +1,4 @@
+import { isValidEmail } from '../shared/email.js'
 import { ValidationError } from '../shared/errors.js'
 import { generateId } from '../shared/ids.js'
 
@@ -17,7 +18,9 @@ export function createCustomer(input: {
   phone?: string
 }): Customer {
   if (!input.name) throw new ValidationError('Name is required')
-  if (!input.email) throw new ValidationError('Email is required')
+  if (!isValidEmail(input.email))
+    throw new ValidationError('Invalid email format')
+
   return {
     id: generateId(),
     userId: input.userId,

@@ -60,4 +60,13 @@ describe('createCustomer', () => {
     }
     expect(() => createCustomer(data)).toThrow(ValidationError)
   })
+  it('should throw a ValidationError when email format is invalid', () => {
+    const data = {
+      userId: 'user1234',
+      name: 'Ignacio',
+      email: 'notanemail',
+      phone: '+54 9 11 2222 3333',
+    }
+    expect(() => createCustomer(data)).toThrow(ValidationError)
+  })
 })
