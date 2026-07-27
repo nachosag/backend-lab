@@ -52,3 +52,14 @@ export class ConflictError extends Error {
     this.statusCode = 409
   }
 }
+
+export class AppError extends Error {
+  readonly statusCode: number
+
+  constructor(message?: string) {
+    super()
+
+    this.message = message ? message : 'Unexpected Internal Error'
+    this.statusCode = 500
+  }
+}
