@@ -128,7 +128,11 @@ tests/                                 ← Mirrors src/ structure
 └── factories/                         ← aUser(), anOrder(), makeUserRepo()...
 ```
 
-**Dependency rule check**: `frameworks/` imports `interface-adapters/`, `use-cases/`, `entities/`. `interface-adapters/` imports `use-cases/` and `entities/`. `use-cases/` imports `entities/` and own interfaces only. `entities/` imports nothing from this project.
+**Dependency rule check**: 
+- `frameworks/` imports `interface-adapters/`, `use-cases/`, `entities/`.
+- `interface-adapters/` imports `use-cases/` and `entities/`. 
+- `use-cases/` imports `entities/` and own interfaces only. 
+- `entities/` imports nothing from this project.
 
 ## Dependency Injection Strategy
 
@@ -369,10 +373,6 @@ export interface PaymentRepository {
 ## Data Flow: Full Order Lifecycle
 
 ```mermaid
----
-config:
-  theme: default
----
 sequenceDiagram
     accTitle: Order lifecycle end-to-end data flow
     accDescr: Client through Express controllers, use cases, and entities across seven HTTP requests
@@ -427,8 +427,7 @@ sequenceDiagram
     UC->>R: paymentRepo.save
     CTR-->>C: 201 Payment (PENDING)
 
-    Note over C,R: (External processor step omitted; the API exposes a process-payment endpoint)
-    C->>A: PATCH /orders/:id/payment/process
+    Note over C,R: External processor step omitted. API exposes process-payment endpoint.
     CTR->>UC: processPayment
     UC->>ENT: payment.markCompleted()
     UC->>R: save(payment)

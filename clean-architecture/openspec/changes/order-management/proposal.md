@@ -41,33 +41,29 @@ None (greenfield project)
 ## Architecture
 
 ```mermaid
----
-config:
-  theme: default
----
 flowchart TB
     accTitle: Clean Architecture 4-layer with all domains
     accDescr: Concentric layers showing where auth, orders, payments, inventory, products, and customers map
 
     subgraph FW["Layer 4: Frameworks & Drivers"]
-        Express["Express server\nroutes, middleware\nJWT auth middleware"]
-        InMemDB["In-memory /\nJSON file store"]
+        Express["Express server routes, middleware JWT auth middleware"]
+        InMemDB["In-memory / JSON file store"]
     end
 
     subgraph IA["Layer 3: Interface Adapters"]
-        Controllers["Controllers\nauth, customer, product\norder, payment"]
-        Presenters["Presenters\n(DTO → HTTP response)"]
-        Repos["Repository impls\n(in-memory / JSON)"]
+        Controllers["Controllers auth, customer, product order, payment"]
+        Presenters["Presenters (DTO → HTTP response)"]
+        Repos["Repository impls (in-memory / JSON)"]
     end
 
     subgraph UC["Layer 2: Use Cases"]
-        AuthUC["Register, Login\nValidateToken"]
-        CustomerUC["Create, Get\nUpdate, List"]
-        ProductUC["Create, Get\nUpdate, List, Delete"]
-        OrderUC["Create, AddItem\nRemoveItem, Submit\nConfirm, Ship\nDeliver, Cancel"]
-        PaymentUC["CreatePayment\nGetPayment"]
-        InventoryUC["CheckStock\nDeductStock\nRestoreStock"]
-        Interfaces["Repository\ninterfaces"]
+        AuthUC["Register, Login ValidateToken"]
+        CustomerUC["Create, Get Update, List"]
+        ProductUC["Create, Get Update, List, Delete"]
+        OrderUC["Create, AddItem RemoveItem, Submit Confirm, Ship Deliver, Cancel"]
+        PaymentUC["CreatePayment GetPayment"]
+        InventoryUC["CheckStock DeductStock RestoreStock"]
+        Interfaces["Repository interfaces"]
     end
 
     subgraph ENT["Layer 1: Entities (innermost)"]
