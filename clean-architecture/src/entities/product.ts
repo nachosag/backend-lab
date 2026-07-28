@@ -18,8 +18,10 @@ export function createProduct(input: {
   price: number
   stock: number
 }): Product {
-  if (input.price <= 0) throw new ValidationError('Price must be positive')
-  if (input.stock < 0) throw new ValidationError('Stock cannot be negative')
+  if (!Number.isFinite(input.price) || input.price <= 0)
+    throw new ValidationError('Price must be a positive finite number')
+  if (!Number.isFinite(input.stock) || input.stock < 0)
+    throw new ValidationError('Stock must be a non-negative finite number')
   if (!input.name) throw new ValidationError('Product must have a name')
   if (!input.sku) throw new ValidationError('Product must have a sku')
 
@@ -28,7 +30,8 @@ export function createProduct(input: {
     ...input,
     createdAt: new Date(),
     deductStock(quantity) {
-      if (quantity <= 0) throw new ValidationError('quantity must be positive')
+      if (!Number.isFinite(quantity) || quantity <= 0)
+        throw new ValidationError('quantity must be a positive finite number')
       if (this.stock < quantity) throw new ConflictError('Insufficient stock')
 
       return {
@@ -37,7 +40,8 @@ export function createProduct(input: {
       }
     },
     restoreStock(quantity) {
-      if (quantity <= 0) throw new ValidationError('quantity must be positive')
+      if (!Number.isFinite(quantity) || quantity <= 0)
+        throw new ValidationError('quantity must be a positive finite number')
       return {
         ...this,
         stock: this.stock + quantity,
