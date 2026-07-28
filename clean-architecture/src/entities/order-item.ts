@@ -16,6 +16,8 @@ export function createOrderItem(input: {
 }): OrderItem {
   if (input.quantity <= 0)
     throw new ValidationError('Quantity must be positive')
+  if (input.unitPrice <= 0)
+    throw new ValidationError('Unit price must be positive')
   return {
     id: generateId(),
     ...input,

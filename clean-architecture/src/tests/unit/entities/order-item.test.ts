@@ -47,4 +47,14 @@ describe('createOrderItem', () => {
       }).subtotal,
     ).toBe(20)
   })
+  it('should throw a ValidationError when unitPrice = 0', () => {
+    expect(() =>
+      createOrderItem({ productId: 'abc123', quantity: 1, unitPrice: 0 }),
+    ).toThrow(ValidationError)
+  })
+  it('should throw a ValidationError when unitPrice is negative', () => {
+    expect(() =>
+      createOrderItem({ productId: 'abc123', quantity: 1, unitPrice: -10 }),
+    ).toThrow(ValidationError)
+  })
 })
