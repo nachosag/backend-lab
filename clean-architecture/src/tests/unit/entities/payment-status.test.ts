@@ -1,11 +1,11 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
 
 import {
-  canTransition,
   assertValidTransition,
+  canTransition,
   PaymentStatus,
-} from '../../../src/entities/payment-status'
-import { ConflictError } from '../../../src/shared/errors'
+} from '../../../entities/payment-status.js'
+import { ConflictError } from '../../../shared/errors.js'
 
 describe('canTransition', () => {
   it('should be a function', () => {

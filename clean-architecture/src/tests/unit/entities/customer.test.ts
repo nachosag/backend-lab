@@ -1,7 +1,7 @@
 import { expectTypeOf, describe, it, expect } from 'vitest'
 
-import { createCustomer, Customer } from '../../../src/entities/customer'
-import { ValidationError } from '../../../src/shared/errors'
+import { createCustomer, type Customer } from '../../../entities/customer.js'
+import { ValidationError } from '../../../shared/errors.js'
 
 describe('createCustomer', () => {
   it('should be a function', () => {

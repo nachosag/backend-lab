@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { isValidEmail } from '../../../src/shared/email'
+
+import { isValidEmail } from '../../../shared/email.js'
 
 describe('isValidEmail', () => {
   it('returns true for a valid email', () => {
