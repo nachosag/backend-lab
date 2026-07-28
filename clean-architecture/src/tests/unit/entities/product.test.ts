@@ -28,6 +28,16 @@ describe('createProduct', () => {
       createProduct({ name: 'test', price: 1, sku: 'test', stock: -1 }),
     ).toThrow(ValidationError)
   })
+  it('should throw ValidationError when name is empty', () => {
+    expect(() =>
+      createProduct({ name: '', price: 1, sku: 'test', stock: 1 }),
+    ).toThrow(ValidationError)
+  })
+  it('should throw ValidationError when sku is empty', () => {
+    expect(() =>
+      createProduct({ name: 'test', price: 1, sku: '', stock: 1 }),
+    ).toThrow(ValidationError)
+  })
 })
 
 describe('deductStock', () => {
@@ -51,6 +61,34 @@ describe('deductStock', () => {
       }).deductStock(11)
     }).toThrow(ConflictError)
   })
+  it('should not mutate the original product', () => {
+    const original = createProduct({
+      name: 'Widget',
+      price: 10,
+      sku: 'WDG-001',
+      stock: 10,
+    })
+    const updated = original.deductStock(3)
+    expect(original.stock).toBe(10)
+    expect(updated).not.toBe(original)
+  })
+  it('should preserve all other fields when deducting stock', () => {
+    const original = createProduct({
+      name: 'Widget',
+      price: 10,
+      sku: 'WDG-001',
+      stock: 10,
+    })
+    const updated = original.deductStock(3)
+    expect(updated).toMatchObject({
+      id: original.id,
+      name: 'Widget',
+      price: 10,
+      sku: 'WDG-001',
+      createdAt: original.createdAt,
+    })
+    expect(updated.stock).toBe(7)
+  })
 })
 
 describe('restoreStock', () => {
@@ -63,5 +101,25 @@ describe('restoreStock', () => {
         stock: 5,
       }).restoreStock(5).stock,
     ).toBe(10)
+  })
+  it('should throw ValidationError when quantity = 0', () => {
+    expect(() => {
+      createProduct({
+        name: 'test',
+        price: 5,
+        sku: 'test',
+        stock: 5,
+      }).restoreStock(0)
+    }).toThrow(ValidationError)
+  })
+  it('should throw ValidationError when quantity is negative', () => {
+    expect(() => {
+      createProduct({
+        name: 'test',
+        price: 5,
+        sku: 'test',
+        stock: 5,
+      }).restoreStock(-1)
+    }).toThrow(ValidationError)
   })
 })

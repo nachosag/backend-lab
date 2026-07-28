@@ -20,6 +20,9 @@ export function createProduct(input: {
 }): Product {
   if (input.price <= 0) throw new ValidationError('Price must be positive')
   if (input.stock < 0) throw new ValidationError('Stock cannot be negative')
+  if (!input.name) throw new ValidationError('Product must have a name')
+  if (!input.sku) throw new ValidationError('Product must have a sku')
+
   return {
     id: generateId(),
     ...input,
@@ -34,6 +37,7 @@ export function createProduct(input: {
       }
     },
     restoreStock(quantity) {
+      if (quantity <= 0) throw new ValidationError('quantity must be positive')
       return {
         ...this,
         stock: this.stock + quantity,
