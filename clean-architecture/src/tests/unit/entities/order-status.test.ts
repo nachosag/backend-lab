@@ -69,4 +69,14 @@ describe('OrderStatus state machine', () => {
       ConflictError,
     )
   })
+  it('SHIPPED → CONFIRMED throws ConflictError', () => {
+    expect(() => assertValidTransition('SHIPPED', 'CONFIRMED')).toThrow(
+      ConflictError,
+    )
+  })
+  it('CANCELLED → DELIVERED throws ConflictError', () => {
+    expect(() => assertValidTransition('CANCELLED', 'DELIVERED')).toThrow(
+      ConflictError,
+    )
+  })
 })
