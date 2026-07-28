@@ -184,13 +184,13 @@ Chain strategy: pending
 **What to build**: `src/entities/order-item.ts` — interface + factory. Fields: id, productId, quantity, unitPrice, subtotal (computed).
 
 **Tests to write first (TDD)**:
-- [ ] OrderItem with quantity ≤ 0 throws ValidationError
-- [ ] subtotal = quantity × unitPrice
-- [ ] OrderItem with quantity=2, unitPrice=10 → subtotal=20
+- [x] OrderItem with quantity ≤ 0 throws ValidationError
+- [x] subtotal = quantity × unitPrice
+- [x] OrderItem with quantity=2, unitPrice=10 → subtotal=20
 
 **Acceptance criteria**:
-- [ ] quantity > 0 enforced
-- [ ] subtotal is always quantity × unitPrice
+- [x] quantity > 0 enforced
+- [x] subtotal is always quantity × unitPrice
 
 ---
 
