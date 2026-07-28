@@ -17,7 +17,8 @@ export function createCustomer(input: {
   email: string
   phone?: string
 }): Customer {
-  if (!input.name) throw new ValidationError('Name is required')
+  if (!input.name || !input.name.trim())
+    throw new ValidationError('Name is required')
   if (!isValidEmail(input.email))
     throw new ValidationError('Invalid email format')
 
