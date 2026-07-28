@@ -3,9 +3,6 @@ import { describe, expect, expectTypeOf, it } from 'vitest'
 import { generateId } from '../../../shared/ids.js'
 
 describe('generateId', () => {
-  it('should be a function', () => {
-    expectTypeOf(generateId).toBeFunction()
-  })
   it('should return a string', () => {
     expectTypeOf(generateId).returns.toBeString()
   })

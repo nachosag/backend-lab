@@ -4,9 +4,6 @@ import { createCustomer, type Customer } from '../../../entities/customer.js'
 import { ValidationError } from '../../../shared/errors.js'
 
 describe('createCustomer', () => {
-  it('should be a function', () => {
-    expectTypeOf(createCustomer).toBeFunction()
-  })
   it('should accept the correct fields', () => {
     type param = {
       userId: string
@@ -27,12 +24,12 @@ describe('createCustomer', () => {
       phone: '+54 9 11 2222 3333',
     }
     const customer = createCustomer(data)
-    expect(customer).toMatchObject({
+    expect(customer).toEqual({
+      id: expect.any(String),
+      userId: data.userId,
       name: data.name,
       email: data.email,
       phone: data.phone,
-      userId: data.userId,
-      id: expect.any(String),
       createdAt: expect.any(Date),
     })
   })
@@ -43,11 +40,11 @@ describe('createCustomer', () => {
       email: 'ignacio@email.com',
     }
     const customer = createCustomer(data)
-    expect(customer).toMatchObject({
+    expect(customer).toEqual({
+      id: expect.any(String),
+      userId: data.userId,
       name: data.name,
       email: data.email,
-      userId: data.userId,
-      id: expect.any(String),
       createdAt: expect.any(Date),
     })
   })
@@ -57,6 +54,14 @@ describe('createCustomer', () => {
       name: '',
       email: 'ignacio@email.com',
       phone: '+54 9 11 2222 3333',
+    }
+    expect(() => createCustomer(data)).toThrow(ValidationError)
+  })
+  it('should throw a ValidationError when name is whitespace only', () => {
+    const data = {
+      userId: 'user1234',
+      name: '   ',
+      email: 'ignacio@email.com',
     }
     expect(() => createCustomer(data)).toThrow(ValidationError)
   })

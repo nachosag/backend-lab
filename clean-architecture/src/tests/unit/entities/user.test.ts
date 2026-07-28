@@ -4,9 +4,6 @@ import { createUser, type User } from '../../../entities/user.js'
 import { ValidationError } from '../../../shared/errors.js'
 
 describe('createUser', () => {
-  it('should be a function', () => {
-    expectTypeOf(createUser).toBeFunction()
-  })
   it('should accept an object as parameter', () => {
     expectTypeOf(createUser)
       .parameter(0)
@@ -23,7 +20,7 @@ describe('createUser', () => {
 
     const user = createUser(input)
 
-    expect(user).toMatchObject({
+    expect(user).toEqual({
       id: expect.any(String),
       email: input.email,
       passwordHash: input.passwordHash,

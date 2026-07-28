@@ -7,9 +7,6 @@ import {
 import { ValidationError } from '../../../shared/errors.js'
 
 describe('createOrderItem', () => {
-  it('should be a function', () => {
-    expectTypeOf(createOrderItem).toBeFunction()
-  })
   it('should accept an object as parameter', () => {
     expectTypeOf(createOrderItem).parameter(0).toMatchObjectType<{
       productId: string
@@ -38,6 +35,15 @@ describe('createOrderItem', () => {
       })
     }).toThrow(ValidationError)
   })
+  it('should throw a ValidationError when quantity is NaN', () => {
+    expect(() =>
+      createOrderItem({
+        productId: 'abc123',
+        quantity: NaN,
+        unitPrice: 1,
+      }),
+    ).toThrow(ValidationError)
+  })
   it('should calculate subtotal correctly', () => {
     expect(
       createOrderItem({
@@ -55,6 +61,20 @@ describe('createOrderItem', () => {
   it('should throw a ValidationError when unitPrice is negative', () => {
     expect(() =>
       createOrderItem({ productId: 'abc123', quantity: 1, unitPrice: -10 }),
+    ).toThrow(ValidationError)
+  })
+  it('should throw a ValidationError when unitPrice is NaN', () => {
+    expect(() =>
+      createOrderItem({ productId: 'abc123', quantity: 1, unitPrice: NaN }),
+    ).toThrow(ValidationError)
+  })
+  it('should throw a ValidationError when unitPrice is Infinity', () => {
+    expect(() =>
+      createOrderItem({
+        productId: 'abc123',
+        quantity: 1,
+        unitPrice: Infinity,
+      }),
     ).toThrow(ValidationError)
   })
 })
