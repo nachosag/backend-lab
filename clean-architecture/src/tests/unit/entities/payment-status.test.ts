@@ -1,63 +1,39 @@
-import { describe, expect, expectTypeOf, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import {
   assertValidTransition,
   canTransition,
-  PaymentStatus,
+  VALID_TRANSITIONS,
+  type PaymentStatus,
 } from '../../../entities/payment-status.js'
 import { ConflictError } from '../../../shared/errors.js'
 
-describe('canTransition', () => {
-  it('should be a function', () => {
-    expectTypeOf(canTransition).toBeFunction()
-  })
-  it('should accept two PaymentStatus parameters', () => {
-    expectTypeOf(canTransition).parameters.toEqualTypeOf<
-      [PaymentStatus, PaymentStatus]
-    >()
-  })
-  it('should return a boolean', () => {
-    expectTypeOf(canTransition).returns.toBeBoolean()
-  })
-})
+const ALL_STATUSES = Object.keys(VALID_TRANSITIONS) as PaymentStatus[]
 
-describe('assertValidTransition', () => {
-  it('should be a function', () => {
-    expectTypeOf(assertValidTransition).toBeFunction()
-  })
-  it('should accept two PaymentStatus parameters', () => {
-    expectTypeOf(assertValidTransition).parameters.toEqualTypeOf<
-      [PaymentStatus, PaymentStatus]
-    >()
-  })
-  it('should return void', () => {
-    expectTypeOf(assertValidTransition).returns.toBeVoid()
-  })
-  it('should throw a ConflictError if transition is invalid', () => {
-    expect(() => assertValidTransition('REFUNDED', 'COMPLETED')).toThrow(
-      ConflictError,
-    )
-  })
-})
+const validTransitions: Array<[PaymentStatus, PaymentStatus]> = Object.entries(
+  VALID_TRANSITIONS,
+).flatMap(([from, tos]) =>
+  (tos as readonly PaymentStatus[]).map(
+    (to) => [from as PaymentStatus, to] as [PaymentStatus, PaymentStatus],
+  ),
+)
+
+const invalidTransitions: Array<[PaymentStatus, PaymentStatus]> =
+  ALL_STATUSES.flatMap((from) =>
+    ALL_STATUSES
+      .filter((to) => !VALID_TRANSITIONS[from].includes(to))
+      .map((to) => [from, to] as [PaymentStatus, PaymentStatus]),
+  )
 
 describe('PaymentStatus state machine', () => {
-  it('PENDING → COMPLETED is valid', () => {
-    expect(canTransition('PENDING', 'COMPLETED')).toBe(true)
+  it.each(validTransitions)('%s → %s is valid', (from, to) => {
+    expect(canTransition(from, to)).toBe(true)
   })
-  it('PENDING → FAILED is valid', () => {
-    expect(canTransition('PENDING', 'FAILED')).toBe(true)
-  })
-  it('COMPLETED → REFUNDED is valid', () => {
-    expect(canTransition('COMPLETED', 'REFUNDED')).toBe(true)
-  })
-  it('FAILED → COMPLETED throws ConflictError', () => {
-    expect(() => assertValidTransition('FAILED', 'COMPLETED')).toThrow(
-      ConflictError,
-    )
-  })
-  it('REFUNDED → COMPLETED throws ConflictError', () => {
-    expect(() => assertValidTransition('REFUNDED', 'COMPLETED')).toThrow(
-      ConflictError,
-    )
-  })
+
+  it.each(invalidTransitions)(
+    '%s → %s throws ConflictError',
+    (from, to) => {
+      expect(() => assertValidTransition(from, to)).toThrow(ConflictError)
+    },
+  )
 })

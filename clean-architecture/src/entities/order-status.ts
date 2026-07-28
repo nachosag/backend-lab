@@ -11,7 +11,7 @@ export const OrderStatus = {
 
 export type OrderStatus = keyof typeof OrderStatus
 
-const VALID_TRANSITIONS: Record<OrderStatus, readonly OrderStatus[]> = {
+export const VALID_TRANSITIONS: Record<OrderStatus, readonly OrderStatus[]> = {
   DRAFT: ['PENDING'],
   PENDING: ['CONFIRMED', 'CANCELLED'],
   CONFIRMED: ['SHIPPED', 'CANCELLED'],

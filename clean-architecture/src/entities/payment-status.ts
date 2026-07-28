@@ -9,7 +9,7 @@ export const PaymentStatus = {
 
 export type PaymentStatus = keyof typeof PaymentStatus
 
-const VALID_TRANSITIONS: Record<PaymentStatus, readonly PaymentStatus[]> = {
+export const VALID_TRANSITIONS: Record<PaymentStatus, readonly PaymentStatus[]> = {
   PENDING: ['COMPLETED', 'FAILED'],
   COMPLETED: ['REFUNDED'],
   FAILED: [],

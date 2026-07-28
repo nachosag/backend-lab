@@ -1,82 +1,39 @@
-import { describe, expect, expectTypeOf, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import {
   assertValidTransition,
   canTransition,
-  OrderStatus,
+  VALID_TRANSITIONS,
+  type OrderStatus,
 } from '../../../entities/order-status.js'
 import { ConflictError } from '../../../shared/errors.js'
 
-describe('canTransition', () => {
-  it('should be a function', () => {
-    expectTypeOf(canTransition).toBeFunction()
-  })
-  it('should accept two OrderStatus parameters', () => {
-    expectTypeOf(canTransition).parameters.toEqualTypeOf<
-      [OrderStatus, OrderStatus]
-    >()
-  })
-  it('should return a boolean', () => {
-    expectTypeOf(canTransition).returns.toBeBoolean()
-  })
-})
+const ALL_STATUSES = Object.keys(VALID_TRANSITIONS) as OrderStatus[]
 
-describe('assertValidTransition', () => {
-  it('should be a function', () => {
-    expectTypeOf(assertValidTransition).toBeFunction()
-  })
-  it('should accept two OrderStatus parameters', () => {
-    expectTypeOf(assertValidTransition).parameters.toEqualTypeOf<
-      [OrderStatus, OrderStatus]
-    >()
-  })
-  it('should return void', () => {
-    expectTypeOf(assertValidTransition).returns.toBeVoid()
-  })
-})
+const validTransitions: Array<[OrderStatus, OrderStatus]> = Object.entries(
+  VALID_TRANSITIONS,
+).flatMap(([from, tos]) =>
+  (tos as readonly OrderStatus[]).map(
+    (to) => [from as OrderStatus, to] as [OrderStatus, OrderStatus],
+  ),
+)
+
+const invalidTransitions: Array<[OrderStatus, OrderStatus]> = ALL_STATUSES.flatMap(
+  (from) =>
+    ALL_STATUSES
+      .filter((to) => !VALID_TRANSITIONS[from].includes(to))
+      .map((to) => [from, to] as [OrderStatus, OrderStatus]),
+)
 
 describe('OrderStatus state machine', () => {
-  it('DRAFT → PENDING is valid', () => {
-    expect(canTransition('DRAFT', 'PENDING')).toBe(true)
+  it.each(validTransitions)('%s → %s is valid', (from, to) => {
+    expect(canTransition(from, to)).toBe(true)
   })
-  it(' PENDING → CONFIRMED is valid', () => {
-    expect(canTransition('PENDING', 'CONFIRMED')).toBe(true)
-  })
-  it(' PENDING → CANCELLED is valid', () => {
-    expect(canTransition('PENDING', 'CANCELLED')).toBe(true)
-  })
-  it(' CONFIRMED → SHIPPED is valid', () => {
-    expect(canTransition('CONFIRMED', 'SHIPPED')).toBe(true)
-  })
-  it(' CONFIRMED → CANCELLED is valid', () => {
-    expect(canTransition('CONFIRMED', 'CANCELLED')).toBe(true)
-  })
-  it(' SHIPPED → DELIVERED is valid', () => {
-    expect(canTransition('SHIPPED', 'DELIVERED')).toBe(true)
-  })
-  it('DRAFT → CONFIRMED throws ConflictError', () => {
-    expect(() => assertValidTransition('DRAFT', 'CONFIRMED')).toThrow(
-      ConflictError,
-    )
-  })
-  it('CANCELLED → DRAFT throws ConflictError', () => {
-    expect(() => assertValidTransition('CANCELLED', 'DRAFT')).toThrow(
-      ConflictError,
-    )
-  })
-  it('DELIVERED → CANCELLED throws ConflictError', () => {
-    expect(() => assertValidTransition('DELIVERED', 'CANCELLED')).toThrow(
-      ConflictError,
-    )
-  })
-  it('SHIPPED → CONFIRMED throws ConflictError', () => {
-    expect(() => assertValidTransition('SHIPPED', 'CONFIRMED')).toThrow(
-      ConflictError,
-    )
-  })
-  it('CANCELLED → DELIVERED throws ConflictError', () => {
-    expect(() => assertValidTransition('CANCELLED', 'DELIVERED')).toThrow(
-      ConflictError,
-    )
-  })
+
+  it.each(invalidTransitions)(
+    '%s → %s throws ConflictError',
+    (from, to) => {
+      expect(() => assertValidTransition(from, to)).toThrow(ConflictError)
+    },
+  )
 })
