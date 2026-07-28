@@ -30,9 +30,9 @@ describe('createUser', () => {
       createdAt: expect.any(Date),
     })
   })
-  it('should throw an error if email is empty', () => {
+  it('should throw an error if email is invalid', () => {
     expect(() =>
-      createUser({ email: '', passwordHash: 'hashedPassword' }),
+      createUser({ email: 'notanemail', passwordHash: 'hashedPassword' }),
     ).toThrow(ValidationError)
   })
 })
