@@ -14,10 +14,10 @@ export function createOrderItem(input: {
   quantity: number
   unitPrice: number
 }): OrderItem {
-  if (input.quantity <= 0)
-    throw new ValidationError('Quantity must be positive')
-  if (input.unitPrice <= 0)
-    throw new ValidationError('Unit price must be positive')
+  if (!Number.isFinite(input.quantity) || input.quantity <= 0)
+    throw new ValidationError('Quantity must be a positive finite number')
+  if (!Number.isFinite(input.unitPrice) || input.unitPrice <= 0)
+    throw new ValidationError('Unit price must be a positive finite number')
   return {
     id: generateId(),
     ...input,
