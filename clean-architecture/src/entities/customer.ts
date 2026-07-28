@@ -7,7 +7,7 @@ export interface Customer {
   userId: string
   name: string
   email: string
-  phone: string | undefined
+  phone?: string
   createdAt: Date
 }
 
@@ -26,7 +26,7 @@ export function createCustomer(input: {
     userId: input.userId,
     email: input.email,
     name: input.name,
-    phone: input.phone,
+    ...(input.phone !== undefined && { phone: input.phone }),
     createdAt: new Date(),
   }
 }
