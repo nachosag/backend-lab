@@ -162,15 +162,15 @@ Chain strategy: pending
 **What to build**: `src/entities/product.ts` — interface + methods (`deductStock`, `restoreStock`). Fields: id, sku, name, price, stock, createdAt.
 
 **Tests to write first (TDD)**:
-- [ ] Product with price ≤ 0 throws ValidationError
-- [ ] Product with stock < 0 throws ValidationError
-- [ ] `deductStock(5)` on stock=10 → stock=5
-- [ ] `deductStock(11)` on stock=10 throws ConflictError
-- [ ] `restoreStock(5)` on stock=5 → stock=10
+- [x] Product with price ≤ 0 throws ValidationError
+- [x] Product with stock < 0 throws ValidationError
+- [x] `deductStock(5)` on stock=10 → stock=5
+- [x] `deductStock(11)` on stock=10 throws ConflictError
+- [x] `restoreStock(5)` on stock=5 → stock=10
 
 **Acceptance criteria**:
-- [ ] price > 0, stock ≥ 0 enforced
-- [ ] deductStock/restoreStock maintain non-negative invariant
+- [x] price > 0, stock ≥ 0 enforced
+- [x] deductStock/restoreStock maintain non-negative invariant
 
 ---
 
