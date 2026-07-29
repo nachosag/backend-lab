@@ -204,25 +204,25 @@ Chain strategy: pending
 **What to build**: `src/entities/order.ts` — aggregate with methods: `addItem`, `removeItem`, `submit`, `confirm`, `ship`, `deliver`, `cancel`, `recomputeTotal`. Fields: id, customerId, status, items[], total, createdAt, updatedAt.
 
 **Tests to write first (TDD)**:
-- [ ] New order starts in DRAFT status
-- [ ] `addItem` in DRAFT appends item and recomputes total
-- [ ] `addItem` in PENDING throws ConflictError
-- [ ] `removeItem` in DRAFT removes item and recomputes total
-- [ ] `removeItem` in PENDING throws ConflictError
-- [ ] `removeItem` with unknown itemId throws NotFoundError
-- [ ] `submit` transitions DRAFT → PENDING
-- [ ] `confirm` transitions PENDING → CONFIRMED
-- [ ] `ship` transitions CONFIRMED → SHIPPED
-- [ ] `deliver` transitions SHIPPED → DELIVERED
-- [ ] `cancel` transitions PENDING → CANCELLED
-- [ ] `cancel` transitions CONFIRMED → CANCELLED
-- [ ] Invalid transitions throw ConflictError
-- [ ] Total = Σ(quantity × unitPrice) for all items
+- [x] New order starts in DRAFT status
+- [x] `addItem` in DRAFT appends item and recomputes total
+- [x] `addItem` in PENDING throws ConflictError
+- [x] `removeItem` in DRAFT removes item and recomputes total
+- [x] `removeItem` in PENDING throws ConflictError
+- [x] `removeItem` with unknown itemId throws NotFoundError
+- [x] `submit` transitions DRAFT → PENDING
+- [x] `confirm` transitions PENDING → CONFIRMED
+- [x] `ship` transitions CONFIRMED → SHIPPED
+- [x] `deliver` transitions SHIPPED → DELIVERED
+- [x] `cancel` transitions PENDING → CANCELLED
+- [x] `cancel` transitions CONFIRMED → CANCELLED
+- [x] Invalid transitions throw ConflictError
+- [x] Total = Σ(quantity × unitPrice) for all items
 
 **Acceptance criteria**:
-- [ ] State machine enforced via OrderStatus
-- [ ] Items only modifiable in DRAFT
-- [ ] Total always equals sum of subtotals
+- [x] State machine enforced via OrderStatus
+- [x] Items only modifiable in DRAFT
+- [x] Total always equals sum of subtotals
 
 ---
 
