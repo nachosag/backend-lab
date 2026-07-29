@@ -9,11 +9,13 @@ export interface OrderItem {
   subtotal: number
 }
 
-export function createOrderItem(input: {
+export interface CreateOrderItemInput {
   productId: string
   quantity: number
   unitPrice: number
-}): OrderItem {
+}
+
+export function createOrderItem(input: CreateOrderItemInput): OrderItem {
   if (!Number.isFinite(input.quantity) || input.quantity <= 0)
     throw new ValidationError('Quantity must be a positive finite number')
   if (!Number.isFinite(input.unitPrice) || input.unitPrice <= 0)

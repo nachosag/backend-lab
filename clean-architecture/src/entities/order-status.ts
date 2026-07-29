@@ -12,12 +12,12 @@ export const OrderStatus = {
 export type OrderStatus = keyof typeof OrderStatus
 
 export const VALID_TRANSITIONS: Record<OrderStatus, readonly OrderStatus[]> = {
-  DRAFT: ['PENDING'],
-  PENDING: ['CONFIRMED', 'CANCELLED'],
-  CONFIRMED: ['SHIPPED', 'CANCELLED'],
-  SHIPPED: ['DELIVERED'],
-  DELIVERED: [],
-  CANCELLED: [],
+  DRAFT: ['DRAFT', 'PENDING'],
+  PENDING: ['PENDING', 'CONFIRMED', 'CANCELLED'],
+  CONFIRMED: ['CONFIRMED', 'SHIPPED', 'CANCELLED'],
+  SHIPPED: ['SHIPPED', 'DELIVERED'],
+  DELIVERED: ['DELIVERED'],
+  CANCELLED: ['CANCELLED'],
 }
 
 export function canTransition(from: OrderStatus, to: OrderStatus): boolean {
