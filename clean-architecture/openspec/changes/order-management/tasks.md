@@ -236,15 +236,15 @@ Chain strategy: pending
 **What to build**: `src/entities/payment.ts` — entity with methods: `markCompleted`, `markFailed`, `refund`. Fields: id, orderId, amount, status, method, createdAt.
 
 **Tests to write first (TDD)**:
-- [ ] New payment starts PENDING
-- [ ] `markCompleted` transitions PENDING → COMPLETED
-- [ ] `markFailed` transitions PENDING → FAILED
-- [ ] `refund` transitions COMPLETED → REFUNDED
-- [ ] `markCompleted` on FAILED throws ConflictError
+- [x] New payment starts PENDING
+- [x] `markCompleted` transitions PENDING → COMPLETED
+- [x] `markFailed` transitions PENDING → FAILED
+- [x] `refund` transitions COMPLETED → REFUNDED
+- [x] `markCompleted` on FAILED throws ConflictError
 
 **Acceptance criteria**:
-- [ ] Payment state machine enforced
-- [ ] Entity interface matches design
+- [x] Payment state machine enforced
+- [x] Entity interface matches design
 
 ---
 
