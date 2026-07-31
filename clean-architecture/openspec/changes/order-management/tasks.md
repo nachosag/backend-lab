@@ -258,12 +258,12 @@ Chain strategy: pending
 **What to build**: `tests/factories/` — `aUser()`, `aCustomer()`, `aProduct()`, `anOrder()`, `anOrderItem()`, `aPayment()`, `makeUserRepo()`, `makeCustomerRepo()`, `makeProductRepo()`, `makeOrderRepo()`, `makePaymentRepo()`.
 
 **Tests to write first (TDD)**:
-- [ ] Each factory returns valid entity with defaults
-- [ ] Each mock repo has all methods as `vi.fn()`
+- [x] Each factory returns valid entity with defaults
+- [x] Each mock repo has all methods as `vi.fn()`
 
 **Acceptance criteria**:
-- [ ] Factories accept overrides via Partial spread
-- [ ] Mock repos match repository interfaces
+- [x] Factories accept overrides via Partial spread
+- [x] Mock repos match repository interfaces
 
 ---
 
@@ -279,11 +279,11 @@ Chain strategy: pending
 **What to build**: `src/use-cases/interfaces/` — `user-repository.interface.ts`, `customer-repository.interface.ts`, `product-repository.interface.ts`, `order-repository.interface.ts`, `payment-repository.interface.ts`.
 
 **Tests to write first (TDD)**:
-- [ ] TypeScript compiles with no errors (interfaces are type-only)
+- [x] TypeScript compiles with no errors (interfaces are type-only)
 
 **Acceptance criteria**:
-- [ ] All interfaces match design signatures
-- [ ] All methods are async (return Promises)
+- [x] All interfaces match design signatures
+- [x] All methods are async (return Promises)
 
 ---
 
