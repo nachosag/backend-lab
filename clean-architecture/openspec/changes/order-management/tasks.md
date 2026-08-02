@@ -297,16 +297,16 @@ Chain strategy: pending
 **What to build**: `src/interface-adapters/repositories/in-memory/` — one file per repo, backed by `Map<string, Entity>`.
 
 **Tests to write first (TDD)**:
-- [ ] `save` + `findById` round-trips an entity
-- [ ] `findByEmail` returns correct user
-- [ ] `findBySku` returns correct product
-- [ ] `findAll` returns all entities
-- [ ] `delete` removes entity
-- [ ] `findByOrderId` returns correct payment
+- [x] `save` + `findById` round-trips an entity
+- [x] `findByEmail` returns correct user
+- [x] `findBySku` returns correct product
+- [x] `findAll` returns all entities
+- [x] `delete` removes entity
+- [x] `findByOrderId` returns correct payment
 
 **Acceptance criteria**:
-- [ ] All repos implement their interface
-- [ ] save is upsert by id
+- [x] All repos implement their interface
+- [x] save is upsert by id
 
 ---
 
