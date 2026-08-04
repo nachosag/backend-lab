@@ -1,4 +1,5 @@
 import type { User } from '../../../entities/user.js'
+import { ConflictError } from '../../../shared/errors.js'
 import type { UserRepository } from '../../../use-cases/interfaces/user-repository.interface.js'
 
 export class InMemoryUserRepository implements UserRepository {
@@ -16,6 +17,10 @@ export class InMemoryUserRepository implements UserRepository {
   }
 
   async save(user: User): Promise<User> {
+    const result = await this.findByEmail(user.email)
+
+    if (result) throw new ConflictError('Email already exists')
+
     this.store.set(user.id, user)
     return user
   }
