@@ -320,14 +320,14 @@ Chain strategy: pending
 **What to build**: `src/use-cases/auth/auth.dto.ts` (RegisterInput, RegisterOutput, LoginInput, LoginOutput), `src/use-cases/auth/register.use-case.ts`.
 
 **Tests to write first (TDD)**:
-- [ ] Register with valid data creates User + Customer and returns JWT
-- [ ] Register with duplicate email throws ConflictError
-- [ ] Register with password < 8 chars throws ValidationError
+- [x] Register with valid data creates User + Customer and returns JWT
+- [x] Register with duplicate email throws ConflictError
+- [x] Register with password < 8 chars throws ValidationError
 
 **Acceptance criteria**:
-- [ ] Password hashed with bcrypt before save
-- [ ] JWT contains userId + email, expires 24h
-- [ ] Customer created with matching data
+- [x] Password hashed with bcrypt before save
+- [x] JWT contains userId + email, expires 24h
+- [x] Customer created with matching data
 
 ---
 
